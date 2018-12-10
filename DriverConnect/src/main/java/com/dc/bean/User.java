@@ -1,19 +1,28 @@
 package com.dc.bean;
 
-public class UserBean extends AbstractBean {
+public class User extends AbstractBean {
 
-	private String Name ;
+	private String firstname;
+	private String lastname;
 	private String mobileNo;
 	private String address;
 	private String userType;
+	private String email;
 
 	
-	String getName() {
-		return Name;
+	public String getFirstname() {
+		return firstname;
 	}
-	public void setName(String name) {
-		Name = name;
+	public void setFirstname(String firstname) {
+		this.firstname = firstname;
 	}
+	public String getLastname() {
+		return lastname;
+	}
+	public void setLastname(String lastname) {
+		this.lastname = lastname;
+	}
+	
 	public String getMobileNo() {
 		return mobileNo;
 	}
@@ -32,8 +41,12 @@ public class UserBean extends AbstractBean {
 	public void setUserType(String userType) {
 		this.userType = userType;
 	}
-	
-
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
 	
 	
 }
