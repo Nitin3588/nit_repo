@@ -8,6 +8,7 @@ public class User extends AbstractBean {
 	private String address;
 	private String userType;
 	private String email;
+	private String otp;
 
 	
 	public String getFirstname() {
@@ -46,6 +47,12 @@ public class User extends AbstractBean {
 	}
 	public void setEmail(String email) {
 		this.email = email;
+	}
+	public String getOtp() {
+		return otp;
+	}
+	public void setOtp(String otp) {
+		this.otp = otp;
 	}
 	
 	
