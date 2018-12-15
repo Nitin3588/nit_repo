@@ -15,19 +15,6 @@
 	  </property>
 	</bean>
     
-   	<!-- For multiple prop file --> 
-	<!-- Property file in file system path -->
-	<!-- <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
-	  <property name="locations">
-	    <list>
-	      Default location inside war file
-	      <value>classpath:app.properties</value>
-	      Environment specific location, a fixed path on server
-	      <value>file:///opt/my-app/conf/app.properties</value>
-	    </list>
-	  </property>
-	  <property name="ignoreResourceNotFound" value="true"/>
-	</bean> -->
     
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	  <property name="driverClassName" value="${jdbc.driver}" />

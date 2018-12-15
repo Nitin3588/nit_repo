@@ -1,4 +1,7 @@
-package com.dc.dao;
+ package com.dc.dao;
+
+import java.sql.SQLException;
+import java.util.List;
 
 import com.dc.bean.User;
 import com.dc.exception.DataAccessLayerException;
@@ -13,5 +16,7 @@ public interface UserDao {
 	
 	
 	User findUserById(int userId) throws DataAccessLayerException;
+
+	List<User> findAllusers() throws DataAccessLayerException;
 
 }

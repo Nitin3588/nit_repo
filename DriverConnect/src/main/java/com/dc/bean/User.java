@@ -1,27 +1,29 @@
 package com.dc.bean;
 
+import java.util.Date;
+
 public class User extends AbstractBean {
 
-	private String firstname;
-	private String lastname;
+	private String firstName;
+	private String lastName;
 	private String mobileNo;
 	private String address;
 	private String userType;
 	private String email;
 	private String otp;
-
+	private Date dob;
 	
-	public String getFirstname() {
-		return firstname;
+	public String getFirstName() {
+		return firstName;
 	}
-	public void setFirstname(String firstname) {
-		this.firstname = firstname;
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
 	}
-	public String getLastname() {
-		return lastname;
+	public String getLastName() {
+		return lastName;
 	}
-	public void setLastname(String lastname) {
-		this.lastname = lastname;
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 	
 	public String getMobileNo() {
@@ -54,6 +56,11 @@ public class User extends AbstractBean {
 	public void setOtp(String otp) {
 		this.otp = otp;
 	}
-	
+	public Date getDob() {
+		return dob;
+	}
+	public void setDob(Date dob) {
+		this.dob = dob;
+	}
 	
 }

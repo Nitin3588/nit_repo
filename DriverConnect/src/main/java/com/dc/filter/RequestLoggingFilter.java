@@ -13,18 +13,21 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class RequestLoggingFilter implements Filter {
 
 	private ServletContext context;
 	
-	
+	private static final Logger log = LoggerFactory.getLogger(RequestLoggingFilter.class);
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		
 		this.context = config.getServletContext();
 		this.context.log("RequestLoggingFilter initialized");
-		
+		log.debug("RequestLoggingFilter initialized");
 	}
 	
 	

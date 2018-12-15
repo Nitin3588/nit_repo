@@ -6,6 +6,7 @@ import java.util.Date;
 public abstract class AbstractBean {
 
 	private Integer id;
+	private String name;
 	private Date createdDate;
 	private String createdBy;
 	private Date mdfdDate;
@@ -49,9 +50,5 @@ public abstract class AbstractBean {
 	public void setStatus(boolean status) {
 		this.status = status;
 	}
-
-
-
-
 
 }
