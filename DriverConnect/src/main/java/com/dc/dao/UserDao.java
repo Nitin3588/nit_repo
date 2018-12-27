@@ -1,6 +1,5 @@
  package com.dc.dao;
 
-import java.sql.SQLException;
 import java.util.List;
 
 import com.dc.bean.User;
@@ -14,9 +13,12 @@ public interface UserDao {
 
 	void updateUser(User user) throws DataAccessLayerException;
 	
-	
 	User findUserById(int userId) throws DataAccessLayerException;
 
 	List<User> findAllusers() throws DataAccessLayerException;
+	
+	User findUserByMobile(String mobile) throws DataAccessLayerException;
 
+	public void genrateOTP(String mobile) throws DataAccessLayerException ;
+	
 }

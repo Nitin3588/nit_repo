@@ -108,8 +108,40 @@
 		    <artifactId>logback-classic</artifactId>
 		    <version>1.1.7</version>
 		</dependency>
-		 <!-- logging Api end -->
-        
+		<!-- logging Api end -->
+		
+		<!-- Mail Api start -->
+		<dependency>
+		    <groupId>javax.mail</groupId>
+		    <artifactId>javax.mail-api</artifactId>
+		    <version>1.6.0</version>
+		</dependency>
+		
+		<dependency>
+		    <groupId>com.sun.mail</groupId>
+		    <artifactId>javax.mail</artifactId>
+		    <version>1.5.5</version>
+		</dependency>
+		
+		<!-- Mail Api end -->
+		
+		<!-- SMS Api start -->
+		<dependency>
+		    <groupId>com.twilio.sdk</groupId>
+		    <artifactId>twilio</artifactId>
+		    <version>7.20.0</version>
+		    <scope>runtime</scope>
+		</dependency>
+		<!-- SMS Api end -->
+		
+		<!-- file upload Api start -->
+		<dependency>
+		    <groupId>commons-fileupload</groupId>
+		    <artifactId>commons-fileupload</artifactId>
+		    <version>1.3.1</version>
+		</dependency>
+		<!-- file upload Api end -->
+		
     
   </dependencies>
   <build>

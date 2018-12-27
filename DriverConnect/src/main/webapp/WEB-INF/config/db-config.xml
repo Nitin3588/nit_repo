@@ -8,12 +8,12 @@
                            http://www.springframework.org/schema/context
                            http://www.springframework.org/schema/context/spring-context.xsd ">
                            
-     <!-- Property file in class path -->                      
-    <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+    <!--  Property file in class path  -->                     
+    <!-- <bean id="dbPropertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
 	  <property name="location">
 			<value>classpath:db-config.properties</value>
 	  </property>
-	</bean>
+	</bean> -->
     
     
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">

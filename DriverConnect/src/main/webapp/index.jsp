@@ -4,13 +4,22 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<link rel="stylesheet" type="text/css" href="./WEB-INF/style.css"/>
 <title>Welcome</title>
 </head>
 <body>
+
+	<div>
+		<h2>Welcome DriverConnect App</h2>
+	</div>
 	<table align="center">
 		<tr>
-			<td><a href="login">Login</a></td>
-			<td><a href="register">Register</a></td>
+			<td>
+				<div><h2><a href="login">Login</a></h2></div>
+			</td>
+			<td>
+				<div><h2><a href="register">Signup</a></h2></div>
+			</td>
 		</tr>
 	</table>
 </body>

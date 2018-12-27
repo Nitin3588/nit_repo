@@ -6,7 +6,16 @@ import java.io.InputStreamReader;
 import java.net.HttpURLConnection;
 import java.net.URL;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.twilio.Twilio;
+import com.twilio.rest.api.v2010.account.Message;
+import com.twilio.type.PhoneNumber;
+
 public class Sender {
+	
+	private  static final Logger Logger = LoggerFactory.getLogger(Sender.class); 
 
 	// Username that is to be used for submission
 	String username;
@@ -47,6 +56,7 @@ public class Sender {
 
 	/*This logic is written for the system generated SMS to customer related activities related to the requirement RO_006 Description - Customer receives regular SMS on the progress of their complaints*/
 	public Sender(String server, int port, String username, String password,String message, String dlr, String type, String destination,String source) {
+		
 		System.out.println("Getting data");
 		this.username = username;
 		this.password = password;
@@ -103,13 +113,12 @@ public class Sender {
 
 		//print result
 		System.out.println(response.toString());
-
-
-
-
 	}
+	
 	public static void main(String[] args) {
 		try {
+			
+			
 			// Below exmaple is for sending Plain text
 			/*Sender s = new Sender("server", 8080, "xxxx",
 	"xxxx", "test for unicode", "1", "0", "440000xxx",
@@ -121,6 +130,7 @@ public class Sender {
 		} catch (Exception ex) {
 		}
 	}
+	
 	/**
 	 * Below method converts the unicode to hex value
 	 * @param regText
@@ -142,4 +152,27 @@ public class Sender {
 		System.out.println(hexString);
 		return hexString;
 	}
+	
+	
+	public static void  sendSMS(String sContent, String destination){
+		
+	String sid =	Constants.PRIVATE_AUTH_TSID; 
+	String token =	Constants.PRIVATE_AUTH_TOKEN; 
+	Twilio.init(sid, token);
+	
+	// replaced  destination  with constant for testing 
+	try {
+
+		Message message = Message .creator( new PhoneNumber("+918308359438"), 
+				new PhoneNumber("+19727374399"),sContent).create();
+		
+		Logger.info("sent sms " + message.getStatus());
+	} catch (Exception e) {
+
+		e.printStackTrace();
+	} 
+	
+		
+	}
+	
 }	

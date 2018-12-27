@@ -8,14 +8,18 @@ import com.dc.exception.DataAccessLayerException;
 
 public interface UserService {
 
-	void saveUser(User user) throws DataAccessLayerException ;
+	public void saveUser(User user) throws DataAccessLayerException ;
 
-	void deleteUser(int Id) throws DataAccessLayerException ;
+	public void deleteUser(int Id) throws DataAccessLayerException ;
 
-	void updateUser(User user) throws DataAccessLayerException ;
+	public void updateUser(User user) throws DataAccessLayerException ;
 	
-	List<User> findAllusers() throws DataAccessLayerException ;
+	public List<User> findAllusers() throws DataAccessLayerException ;
 	
-	User findUserById(int Id) throws DataAccessLayerException ;
+	public User findUserById(int Id) throws DataAccessLayerException ;
+	
+	public User findUserByMobile(String mobile) throws DataAccessLayerException ;
+	
+	public String genrateOTP(String mobile) throws DataAccessLayerException ;
 
 }

@@ -74,6 +74,39 @@ public class UserDaoImpl implements UserDao{
 		List<User> userList =  new ArrayList<User>();
 		return userList;
 	}
+
+	@Override
+	public User findUserByMobile(String mobile) throws DataAccessLayerException {
+
+		User userDetails = null;
+		final String query =" SELECT * FROM `rd_usr` WHERE `MOB_NO`=? ";	
+		try {
+			userDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{mobile}, new RowMapper<User>(){
+				@Override
+				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
+					User user = new User();
+					user.setId(rs.getInt("ID"));
+					user.setFirstName(rs.getString("F_NM"));   
+					user.setLastName(rs.getString("L_NM"));
+				  //user.setPassword(rs.getString("USR_PWD"));
+					user.setOtp(rs.getString("OTP"));
+					user.setEmail(rs.getString("EML"));
+					user.setMobileNo(rs.getString("MOB_NO"));
+					user.setStatus(rs.getBoolean("ACTIVE"));
+					return user;
+				}});			
+		} catch (Exception excp) {						
+			throw new DataAccessLayerException("Error find user by Id",excp);
+		}
+		
+		return userDetails;
+	}
+
+	@Override
+	public void genrateOTP(String mobile) throws DataAccessLayerException {
+		// TODO Auto-generated method stub
+		
+	}
 	
 }
 	

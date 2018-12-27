@@ -20,14 +20,14 @@ public class RequestLoggingFilter implements Filter {
 
 	private ServletContext context;
 	
-	private static final Logger log = LoggerFactory.getLogger(RequestLoggingFilter.class);
+	private static final Logger LOGGER = LoggerFactory.getLogger(RequestLoggingFilter.class);
 	
 	@Override
 	public void init(FilterConfig config) throws ServletException {
 		
 		this.context = config.getServletContext();
 		this.context.log("RequestLoggingFilter initialized");
-		log.debug("RequestLoggingFilter initialized");
+		LOGGER.debug("RequestLoggingFilter initialized");
 	}
 	
 	

@@ -13,6 +13,7 @@ import com.dc.dao.UserDao;
 import com.dc.dao.impl.UserDaoImpl;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.UserService;
+import com.dc.utill.CommonUtill;
 
 
 @Transactional
@@ -22,7 +23,7 @@ public class UserServiceImpl implements UserService {
 	@Autowired
 	UserDao userDao;
 	
-	private  static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class); 
+	private  static final Logger Logger = LoggerFactory.getLogger(UserServiceImpl.class); 
 
 	public void saveUser(User user) throws DataAccessLayerException{
 		userDao.saveUser(user);
@@ -44,6 +45,19 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public User findUserById(int userId) throws DataAccessLayerException {
 		return  userDao.findUserById(userId);
+	}
+
+	@Override
+	public User findUserByMobile(String mobile) throws DataAccessLayerException {
+		return  userDao.findUserByMobile(mobile);
+	}
+
+	@Override
+	public String genrateOTP(String mobile) throws DataAccessLayerException {
+		String otp =CommonUtill.generateOTP();
+		//Save Otp details if required
+		//userDao. genrateOTP(mobile);
+		 return otp;
 	}
 
 }
