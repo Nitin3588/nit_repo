@@ -12,15 +12,13 @@
 	<div>
 		<h2>Welcome DriverConnect App</h2>
 	</div>
-	<table align="center">
-		<tr>
-			<td>
-				<div><h2><a href="login">Login</a></h2></div>
-			</td>
-			<td>
-				<div><h2><a href="register">Signup</a></h2></div>
-			</td>
-		</tr>
-	</table>
+	<div>
+	
+		<div><h2><a href="login" class="auth-form-header p-0">Login</a></h2></div>
+		<div><h2><a href="register"  class="auth-form-header p-0">Signup</a></h2></div>
+		<div><h2><a href="landingPage?sts=1"></a> 	landingPage</a></h2></div>
+		
+	</div>
 </body>
+
 </html>

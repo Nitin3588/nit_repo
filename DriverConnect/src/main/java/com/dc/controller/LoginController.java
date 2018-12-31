@@ -23,7 +23,7 @@ public class LoginController  {
 	@Autowired
 	UserService userService;
 	
-	private  static final Logger log = LoggerFactory.getLogger(LoginController.class); 
+	private  static final Logger Logger = LoggerFactory.getLogger(LoginController.class); 
 
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
@@ -38,10 +38,9 @@ public class LoginController  {
 			HttpSession session,Model model) {
 
 		boolean  valid=false;	
-		String password = request.getParameter("password");
-		log.debug(password);
+		Logger.info("inside Login method");
 		try {
-			user = userService.findUserById(1);
+			user = userService.findUserById(Integer.parseInt(user.getUserloginId()));
 			if(null != user) {
 				valid =user.isStatus();
 			}

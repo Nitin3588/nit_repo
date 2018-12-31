@@ -3,12 +3,14 @@ package com.dc.service;
 
 import java.util.List;
 
+import com.dc.bean.JobPostingForm;
+import com.dc.bean.RecruiterProfile;
 import com.dc.bean.User;
 import com.dc.exception.DataAccessLayerException;
 
 public interface UserService {
 
-	public void saveUser(User user) throws DataAccessLayerException ;
+	public User saveUser(User user) throws DataAccessLayerException ;
 
 	public void deleteUser(int Id) throws DataAccessLayerException ;
 
@@ -20,6 +22,10 @@ public interface UserService {
 	
 	public User findUserByMobile(String mobile) throws DataAccessLayerException ;
 	
-	public String genrateOTP(String mobile) throws DataAccessLayerException ;
+	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws DataAccessLayerException;
+	
+	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws DataAccessLayerException;
+	
+	
 
 }

@@ -6,6 +6,8 @@ public final class Constants {
 	public final static String PRIVATE_AUTH_TSID = "ACdfd549cced571333c2c574e9b9e0b14a";
 	
 	public final static String PRIVATE_AUTH_TOKEN = "90ab996c2f74d0ec738c8aa32701b8a0";
+	
+	public final static String UPLOAD_LOCATION="E:/mytemp/";
 
 	public final static String PRIVATE_KEY_PARAMETER = "IN$T@_BEINGHUM@N";
 	public final static String PARAMETER_TYPE_STRING = "STRING";

@@ -8,12 +8,13 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.dc.bean.JobPostingForm;
+import com.dc.bean.OTP;
+import com.dc.bean.RecruiterProfile;
 import com.dc.bean.User;
 import com.dc.dao.UserDao;
-import com.dc.dao.impl.UserDaoImpl;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.UserService;
-import com.dc.utill.CommonUtill;
 
 
 @Transactional
@@ -25,8 +26,8 @@ public class UserServiceImpl implements UserService {
 	
 	private  static final Logger Logger = LoggerFactory.getLogger(UserServiceImpl.class); 
 
-	public void saveUser(User user) throws DataAccessLayerException{
-		userDao.saveUser(user);
+	public User saveUser(User user) throws DataAccessLayerException{
+		return userDao.saveUser(user);
 	}
 
 	public void deleteUser(int Id) throws DataAccessLayerException {
@@ -53,11 +54,12 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public String genrateOTP(String mobile) throws DataAccessLayerException {
-		String otp =CommonUtill.generateOTP();
-		//Save Otp details if required
-		//userDao. genrateOTP(mobile);
-		 return otp;
+	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws DataAccessLayerException{
+		return userDao.saveRecruiterProfile(recruiterProfile);
 	}
-
+	
+	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws DataAccessLayerException{
+		return userDao.saveJobPostingDetails(jobPostingForm);
+	}
+	
 }

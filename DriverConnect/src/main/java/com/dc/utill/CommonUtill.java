@@ -1,5 +1,6 @@
 package com.dc.utill;
 
+import java.sql.Date;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -11,7 +12,6 @@ public class CommonUtill {
 	private  static final Logger Logger = LoggerFactory.getLogger(CommonUtill.class); 
 	
 	public static  String generateOTP(){
-		
 	Logger.info("Generating OTP using random() : "); 
     String numbers = "0123456789"; 
     Random rndm_method = new Random(); 
@@ -29,8 +29,13 @@ public class CommonUtill {
     //save it into db
 	Logger.info("You OTP is : {}",otp); 
     return new String(otp); 
-    
 	}
+	
+	
+	public static Date convertToDbInsertDate(java.util.Date date){
+		Date dateDb =  new Date(date.getTime());
+		return dateDb ;
+		} 	
 	
 }
 	
