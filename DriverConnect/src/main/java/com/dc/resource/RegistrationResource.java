@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.dc.bean.BaseResponse;
 import com.dc.bean.User;
@@ -13,6 +14,9 @@ import com.dc.exception.DataAccessLayerException;
 import com.dc.service.UserService;
 import com.dc.utill.Constants.ResponseStatus;
 
+
+@RestController
+@RequestMapping("/registerMob")
 public class RegistrationResource {
 	
 	
@@ -20,7 +24,7 @@ public class RegistrationResource {
 	UserService userService;
 	
 	@RequestMapping(value = "/register", method = RequestMethod.POST)
-	public @ResponseBody User loginPost(@RequestBody  User user) {
+	public @ResponseBody BaseResponse loginPost(@RequestBody  User user) {
 		
 		BaseResponse response = new BaseResponse();
 		if (null != user) {
@@ -39,7 +43,7 @@ public class RegistrationResource {
 			response.setStatus(ResponseStatus.INVALID_CREDENTIALS);
 			response.setCode(ResponseStatus.INVALID_CREDENTIALS_CODE);
 		}
-		return user;
+		return response;
 	}
 
 }

@@ -6,9 +6,11 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.PreparedStatementCreator;
 import org.springframework.jdbc.core.RowMapper;
@@ -28,6 +30,12 @@ public class OtpDaoImpl implements OtpDao{
 
 	@Autowired
 	JdbcTemplate jdbcTemplate;
+
+	@Autowired
+	@Qualifier("hibernateSessionFactory")
+	private SessionFactory sessionFactory;
+	
+	
 	
 	private  static final Logger Logger = LoggerFactory.getLogger(OtpDaoImpl.class); 
 	
@@ -62,7 +70,7 @@ public class OtpDaoImpl implements OtpDao{
 	@Override
 	public OTP getOtp(String mobile) throws DataAccessLayerException {
 		OTP otpDetails = null;
-		final String query =" SELECT * FROM `dc_otp` WHERE `MOB_NO`=? ";	
+		final String query =" SELECT * FROM `dc_otp` WHERE `MOB_NO`=?  order by CRTD_TMSTMP desc Limit 1 ";	
 		try {
 			 otpDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{mobile}, new RowMapper<OTP>(){
 				@Override
@@ -74,7 +82,7 @@ public class OtpDaoImpl implements OtpDao{
 					return otp;
 				}});			
 		} catch (Exception excp) {						
-			throw new DataAccessLayerException("Error find user by Id",excp);
+			throw new DataAccessLayerException("Error fetching OTP details",excp);
 		}
 		return otpDetails;
 	}

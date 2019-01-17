@@ -31,7 +31,6 @@ public class MailingServiceImpl implements MailingService {
 	}
 	
 	
-	
 	@Override
 	public void sendConfirmRegistrationMail(User user) {
 

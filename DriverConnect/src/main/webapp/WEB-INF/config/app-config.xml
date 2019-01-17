@@ -47,11 +47,11 @@
 		</property>
 	</bean>   -->
     
-    <bean id="emailSender" class="com.dc.utill.EmailSender">   
+    <!-- <bean id="emailSender" class="com.dc.utill.EmailSender">   
     
     
     </bean>
-    
+     -->
     
     
 </beans>

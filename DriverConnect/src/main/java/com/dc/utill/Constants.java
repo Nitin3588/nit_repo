@@ -3,16 +3,16 @@ package com.dc.utill;
 public final class Constants {
 	
 	
+	
+	public final static boolean  SMS_BYPASSED = true;
 	public final static String PRIVATE_AUTH_TSID = "ACdfd549cced571333c2c574e9b9e0b14a";
 	
 	public final static String PRIVATE_AUTH_TOKEN = "90ab996c2f74d0ec738c8aa32701b8a0";
 	
 	public final static String UPLOAD_LOCATION="E:/mytemp/";
 
-	public final static String PRIVATE_KEY_PARAMETER = "IN$T@_BEINGHUM@N";
 	public final static String PARAMETER_TYPE_STRING = "STRING";
 	public final static String PARAMETER_TYPE_NUMBER = "NUMBER";
-	
 	
 	
 	public final static String LOG_METHOD_ENTRY = ">>>";
@@ -34,7 +34,7 @@ public final class Constants {
 		public final String JRXML_FOLDER = "\\resources\\jasper\\";
 		public final String GENERATED_PDFS_FOLDER = "generatedpdfs\\";
 		public final String payment_receipt = "payment_receipt.jrxml";
-		public final String connection_string = "jdbc:mysql://localhost:3306/remedy_db?createDatabaseIfNotExist=true";
+		public final String connection_string = "jdbc:mysql://localhost:3306/db_dc?createDatabaseIfNotExist=true";
 		public final String username = "root";
 		public final String password = "root";
 	}
@@ -43,8 +43,8 @@ public final class Constants {
 	private Constants() {
 	}
 	public interface SMSText{
-		public final String registrationSMS = "Hi $USER_NAME,Thank you for registering complain with www.remedy.com."
-				+ " Your Complain Id is $COMPLAIN_ID: ";
+		public final String registrationSMS = "Hi $USER_NAME,Thank you for registering  with DriverConnectApp"
+				+ " Your UserId is $USER_ID: ";
 	}
 
 	public interface userStatus{
@@ -57,6 +57,7 @@ public final class Constants {
 	public interface userRole{
 		public final int ROLE_ADMIN=1;
 		public final int ROLE_CUSTOMER = 2;
+		
 	}
 	
 	public interface applicationLanguageConstats{

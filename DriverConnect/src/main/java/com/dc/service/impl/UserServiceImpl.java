@@ -54,11 +54,11 @@ public class UserServiceImpl implements UserService {
 	}
 
 	@Override
-	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws DataAccessLayerException{
+	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws Exception{
 		return userDao.saveRecruiterProfile(recruiterProfile);
 	}
 	
-	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws DataAccessLayerException{
+	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws Exception{
 		return userDao.saveJobPostingDetails(jobPostingForm);
 	}
 	

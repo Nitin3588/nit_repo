@@ -16,15 +16,42 @@
 	</bean> -->
     
     
+    
 	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
 	  <property name="driverClassName" value="${jdbc.driver}" />
 	  <property name="url" value="${jdbc.url}" />
 	  <property name="username" value="${jdbc.username}" />
 	  <property name="password" value="${jdbc.password}" />
 	</bean>
+
 	
 	<bean id="jdbcTemplate" class="org.springframework.jdbc.core.JdbcTemplate">  
 		<property name="dataSource" ref="dataSource"></property>  
 	</bean>  
+
+
+	<bean id="hibernateSessionFactory" class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">  
+		<property name="dataSource" ref="dataSource" />
+		<property name="packagesToScan" value="com.dc.dto"></property>
+		<property name="hibernateProperties">
+	         <props>
+	            <!--  <prop key="hibernate.dialect">${hibernate.dialect}</prop>
+	             <prop key="hibernate.show_sql">${hibernate.show_sql:false}</prop>
+	             <prop key="hibernate.format_sql">${hibernate.format_sql:false}</prop> -->
+	            <!-- <prop key="hibernate.connection.isolation">2</prop> -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<prop key="hibernate.show_sql">true</prop>
+				<!-- <prop key="hibernate.hbm2ddl.auto">validate</prop> -->
+				<prop key="hibernate.generate_statistics">true</prop>
+				<!-- <prop key="hibernate.cache.use_second_level_cache">true</prop> -->
+				<!-- <prop key="hibernate.cache.use_query_cache">true</prop> -->
+				<!-- <prop key="hibernate.cache.region.factory_class">org.hibernate.cache.ehcache.EhCacheRegionFactory</prop> -->
+	         </props>
+       </property>  
+	</bean>  
+
+
+
+
 
 </beans>

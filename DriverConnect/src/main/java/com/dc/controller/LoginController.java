@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dc.bean.User;
 import com.dc.service.UserService;
+import com.dc.utill.Constants;
 
 @Controller
 public class LoginController  {
@@ -28,7 +29,7 @@ public class LoginController  {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView showLogin(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView mav = new ModelAndView("login");
-		mav.addObject("login", new User());
+		mav.addObject("user", new User());
 		return mav;
 	}
 
@@ -36,28 +37,52 @@ public class LoginController  {
 	@RequestMapping(value = "/login", method = RequestMethod.POST)
 	public ModelAndView showLoginPost(HttpServletRequest request, HttpServletResponse response,@ModelAttribute("user")User user,
 			HttpSession session,Model model) {
-
+		
+		User userDetails   =  null;
 		boolean  valid=false;	
+		ModelAndView mav = new ModelAndView();
+		
 		Logger.info("inside Login method");
+		
+		
+		if(!Constants.SMS_BYPASSED) {
+		session.setAttribute("loggedInUser", userDetails);
+		mav.setViewName("SubscriberDashboard");
+		mav.addObject("user", userDetails);
+		return mav;
+		}
 		try {
-			user = userService.findUserById(Integer.parseInt(user.getUserloginId()));
-			if(null != user) {
-				valid =user.isStatus();
+		    userDetails = userService.findUserByMobile(user.getUserloginId());
+			if(null != userDetails) {
+				valid =userDetails.isStatus();
+				if(!valid) {
+				mav.setViewName("login");
+				mav.addObject("error", "Acount not Active"); 
+				mav.addObject("user", user);
+				return mav;
+				}
 			}
 		} catch (Exception e) {
 			e.getStackTrace();
 		}
 
 		if(valid) {
+			String dbPass =  userDetails.getPassword();
+			if(user.getPassword().equals(dbPass)) {
+				valid =true ;
+			}
+			
 			user.setFirstName((String)request.getParameter("userName"));
 			user.setUserType(session.getId());
-			session.setAttribute("loggedInUser", user);
-			ModelAndView mav = new ModelAndView("home");
-			mav.addObject("user", user);
+			
+			session.setAttribute("loggedInUser", userDetails);
+			mav.setViewName("home");
+			mav.addObject("user", userDetails);
 			return mav;
 		}else {
-			ModelAndView mav = new ModelAndView("login");
+			mav.setViewName("login");
 			mav.addObject("error", "Invalid Credentials"); 
+			mav.addObject("user", user);
 			return mav;
 
 		} 
@@ -70,6 +95,7 @@ public class LoginController  {
 		session.invalidate();
 		ModelAndView mav = new ModelAndView("login");
 		mav.addObject("error", "Please login"); 
+		mav.addObject("user", new User());
 		return mav;
 
 	}

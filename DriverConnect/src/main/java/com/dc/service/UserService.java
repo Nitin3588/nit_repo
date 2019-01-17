@@ -22,9 +22,9 @@ public interface UserService {
 	
 	public User findUserByMobile(String mobile) throws DataAccessLayerException ;
 	
-	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws DataAccessLayerException;
+	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws Exception;
 	
-	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws DataAccessLayerException;
+	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws Exception;
 	
 	
 

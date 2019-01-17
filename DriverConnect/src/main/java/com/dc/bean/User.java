@@ -1,9 +1,13 @@
 package com.dc.bean;
 
+import java.math.BigInteger;
+import java.util.Date;
+
 import org.springframework.web.multipart.MultipartFile;
 
-public class User extends AbstractBean {
+public class User {
 
+	private BigInteger id;
 	private String firstName;
 	private String lastName;
 	private String mobileNo;
@@ -15,6 +19,20 @@ public class User extends AbstractBean {
 	private String licenseNumber;
 	private String expDate;
 	
+	private String password;
+	private String confirmPassword;
+	private String userName;
+	private Integer cityId;
+	
+	private Date createdDate;
+	private int createdBy;
+	private Date mdfdDate;
+	private int mdfdBy;
+	
+	private String userloginId;
+	private boolean status;
+	
+	
 	private MultipartFile file;  
 	
 	public MultipartFile getFile() {
@@ -23,10 +41,13 @@ public class User extends AbstractBean {
 	public void setFile(MultipartFile file) {
 		this.file = file;
 	}
-	private String password;
-	private String confirmPassword;
-	String fullName;
 	
+	public BigInteger getId() {
+		return id;
+	}
+	public void setId(BigInteger id) {
+		this.id = id;
+	}
 	public String getFirstName() {
 		return firstName;
 	}
@@ -100,11 +121,54 @@ public class User extends AbstractBean {
 	public void setExpDate(String expDate) {
 		this.expDate = expDate;
 	}
-	public String getFullName() {
-		return fullName;
+	
+	public String getUserName() {
+		return userName;
 	}
-	public void setFullName(String fullName) {
-		this.fullName = fullName;
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
+	public Integer getCityId() {
+		return cityId;
+	}
+	public void setCityId(Integer cityId) {
+		this.cityId = cityId;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public int getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(int createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getMdfdDate() {
+		return mdfdDate;
+	}
+	public void setMdfdDate(Date mdfdDate) {
+		this.mdfdDate = mdfdDate;
+	}
+	public int getMdfdBy() {
+		return mdfdBy;
+	}
+	public void setMdfdBy(int mdfdBy) {
+		this.mdfdBy = mdfdBy;
+	}
+	public boolean isStatus() {
+		return status;
+	}
+	public void setStatus(boolean status) {
+		this.status = status;
+	}
+	public String getUserloginId() {
+		return userloginId;
+	}
+	public void setUserloginId(String userloginId) {
+		this.userloginId = userloginId;
 	}
 
 	

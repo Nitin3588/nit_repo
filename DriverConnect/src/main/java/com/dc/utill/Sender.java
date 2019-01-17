@@ -162,11 +162,10 @@ public class Sender {
 	
 	// replaced  destination  with constant for testing 
 	try {
-
-		Message message = Message .creator( new PhoneNumber("+918308359438"), 
-				new PhoneNumber("+19727374399"),sContent).create();
 		
-		Logger.info("sent sms " + message.getStatus());
+		Message message = Message.creator( new PhoneNumber("919892683023"), new PhoneNumber("+19727374399"),sContent).create();
+		Logger.info("SNMS sent " + message.getStatus());
+		
 	} catch (Exception e) {
 
 		e.printStackTrace();

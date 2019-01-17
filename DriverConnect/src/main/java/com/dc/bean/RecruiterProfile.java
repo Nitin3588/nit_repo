@@ -1,8 +1,10 @@
 package com.dc.bean;
 
+import java.util.Date;
 
-public class RecruiterProfile extends AbstractBean{
+public class RecruiterProfile {
 	
+	private Integer id;
 	private String 	fullName;
 	private String  photoName;
 	private String  photoPath;
@@ -14,7 +16,41 @@ public class RecruiterProfile extends AbstractBean{
 	private String DateOfBirth;
 	private String currentDesignation;
 
-	
+	private Date createdDate;
+	private String createdBy;
+	private Date mdfdDate;
+	private String mdfdBy;
+
+	public Integer getId() {
+		return id;
+	}
+	public void setId(Integer id) {
+		this.id = id;
+	}
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+	public String getCreatedBy() {
+		return createdBy;
+	}
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+	public Date getMdfdDate() {
+		return mdfdDate;
+	}
+	public void setMdfdDate(Date mdfdDate) {
+		this.mdfdDate = mdfdDate;
+	}
+	public String getMdfdBy() {
+		return mdfdBy;
+	}
+	public void setMdfdBy(String mdfdBy) {
+		this.mdfdBy = mdfdBy;
+	}
 	public String getFullName() {
 		return fullName;
 	}

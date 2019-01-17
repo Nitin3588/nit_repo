@@ -28,7 +28,7 @@ public class RecruiterBasicDetailController {
 	private  static final Logger Logger = LoggerFactory.getLogger(UserController.class);
 	
 	@RequestMapping(value = "/redirectToDetails", method = RequestMethod.GET)
-	public ModelAndView recruitersBasicDetails(@ModelAttribute("recruiterProfile")RecruiterProfile recruiterProfile,  HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView recruitersBasicDetails(@ModelAttribute("recruiterProfile")RecruiterProfile recruiterProfile,HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView("recruiterPersonalDetails");
 		Logger.info("in recruitBasicDetails" );
@@ -53,7 +53,7 @@ public class RecruiterBasicDetailController {
 		recruiter.setCountry("ORIENTO");*/
 		try {
 			userService.saveRecruiterProfile(recruiterProfile);
-		} catch (DataAccessLayerException e) {
+		} catch (Exception e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}

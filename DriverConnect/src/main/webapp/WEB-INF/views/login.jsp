@@ -8,8 +8,7 @@
 <body>
 	<div class="auth-form px3">
 		<div style="color: red">${error}</div>
-		<form:form id="loginForm" name="loginForm" action="" method="POST"
-			commandName="login">
+		<form:form id="loginForm" name="loginForm" action="login" method="POST" modelAttribute="user">
 
 			<div class="auth-form-header p-0">
 				<h4 style="text-align: center">Sign in to Driver Connect</h4>

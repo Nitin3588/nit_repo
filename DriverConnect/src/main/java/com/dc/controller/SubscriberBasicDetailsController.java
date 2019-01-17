@@ -87,7 +87,7 @@ public class SubscriberBasicDetailsController {
 	
 	
 	public void validateBasicDetailFields(User user,BindingResult result) {
-			String subscriberFullName=user.getFullName();
+			String subscriberFullName=user.getUserName();
 			String dob=user.getDob();
 			String licenseNumber = user.getLicenseNumber();
 			String expDate= user.getExpDate();

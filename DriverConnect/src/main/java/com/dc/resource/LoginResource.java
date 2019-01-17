@@ -30,6 +30,7 @@ public class LoginResource {
 	@RequestMapping(value = "/login", method = RequestMethod.GET)
 	public ModelAndView loginGet(@RequestParam(value = "userId") int userId) {
 		
+		Logger.info("login request recieved from  Mobile {}: ",userId);	
 		User user=null;
 		try {
 			 user= userService.findUserById(userId);
@@ -75,9 +76,8 @@ public class LoginResource {
 		User user = null;
 		BaseResponse response = new BaseResponse();
 		if (null != mobile) {
-			//Logger.info("received : " + userId );
+			Logger.info("received  mobile: {} ,userType: {} " + mobile,userType );
 			try {
-				 //user= userService.findUserById(userId);
 				   user= userService.findUserByMobile(mobile);
 				   
 			} catch (DataAccessLayerException e) {

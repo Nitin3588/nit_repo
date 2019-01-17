@@ -36,7 +36,7 @@ public class EmailSender {
 		try {
 
 			Message message = new MimeMessage(session);
-			message.setFrom(new InternetAddress("nikhil.sol0305@gmail.com"));
+			message.setFrom(new InternetAddress(username));
 			message.setRecipients(Message.RecipientType.TO,	InternetAddress.parse(recipient));
 			message.setSubject(eSubject);
 			message.setText(eContent);

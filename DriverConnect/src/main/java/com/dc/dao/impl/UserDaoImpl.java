@@ -1,78 +1,52 @@
 package com.dc.dao.impl;
 
-import java.sql.Connection;
-import java.sql.Date;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.hibernate.Criteria;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.PreparedStatementCreator;
-import org.springframework.jdbc.core.RowMapper;
-import org.springframework.jdbc.support.GeneratedKeyHolder;
-import org.springframework.jdbc.support.KeyHolder;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Repository;
 
 import com.dc.bean.JobPostingForm;
-import com.dc.bean.OTP;
 import com.dc.bean.RecruiterProfile;
 import com.dc.bean.User;
 import com.dc.dao.UserDao;
+import com.dc.dto.JobPostingDetailsDTO;
+import com.dc.dto.RecruiterProfileDTO;
+import com.dc.dto.UserProfileDTO;
 import com.dc.exception.DataAccessLayerException;
-import com.dc.utill.Constants;
-import com.dc.utill.SqlConstants;
 
 
 @Repository
 public class UserDaoImpl implements UserDao{
 	
+
 	@Autowired
-	JdbcTemplate jdbcTemplate;
+	@Qualifier("hibernateSessionFactory")
+	private SessionFactory sessionFactory;
 	
 	private  static final Logger Logger = LoggerFactory.getLogger(UserDaoImpl.class); 
 	
 	@Override
 	public User saveUser(User user) throws DataAccessLayerException {
-		
-		KeyHolder key = new GeneratedKeyHolder(); 
-	     final String query = SqlConstants.insert_rec_deatils;
-			try {
-				jdbcTemplate.update(new PreparedStatementCreator(){
-					public PreparedStatement createPreparedStatement(Connection connection)throws SQLException{					
-						PreparedStatement ps = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
-						ps.setString(1, user.getFullName());
-						ps.setString(2, user.getPassword());
-						ps.setString(3, user.getFirstName());
-						ps.setString(4, user.getLastName());
-						ps.setString(5,user.getEmail());
-						ps.setString(6,user.getMobileNo());
-						ps.setObject(7,user.getCreatedBy());
-					    ps.setObject(8,user.getId());
-						ps.setBoolean(9,user.isStatus());
-						ps.setString(10,user.getOtp());
-						return ps;
-					}
-				},key);
-				user.setId(key.getKey().intValue());
-				return user;
-			} catch(Exception e) {
-				Logger.error(e.getMessage());
-				throw new DataAccessLayerException("Error while Inserting User", e);
-			}	
-		
-		
-		
+		Session session=sessionFactory.openSession();
+		UserProfileDTO userProfileDTO=new UserProfileDTO();
+		BeanUtils.copyProperties(user, userProfileDTO);
+		session.save(userProfileDTO);
+		BeanUtils.copyProperties(userProfileDTO, user);
+		Logger.info("User details saved");
+		return user;
 	}
 	
 	@Override
 	public void deleteUser(int Id) {
-		
 	}
 	
 	@Override
@@ -84,25 +58,7 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public User findUserById(int userId) throws DataAccessLayerException {
 		User userDetails = null;
-		final String query =" SELECT * FROM `rd_usr` WHERE `ID`=? ";	
-		try {
-			userDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{userId}, new RowMapper<User>(){
-				@Override
-				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-					User user = new User();
-					user.setId(rs.getInt("ID"));
-					user.setFirstName(rs.getString("F_NM"));   
-					user.setLastName(rs.getString("L_NM"));
-				  //user.setPassword(rs.getString("USR_PWD"));
-					user.setOtp(rs.getString("OTP"));
-					user.setEmail(rs.getString("EML"));
-					user.setMobileNo(rs.getString("MOB_NO"));
-					user.setStatus(rs.getBoolean("ACTIVE"));
-					return user;
-				}});			
-		} catch (Exception excp) {						
-			throw new DataAccessLayerException("Error find user by Id",excp);
-		}
+		final String query =" * FROM `dc_sub_usr` WHERE `ID`=? ";	
 		
 		return userDetails;
 	}
@@ -111,32 +67,29 @@ public class UserDaoImpl implements UserDao{
 	@Override
 	public List<User> findAllusers() throws DataAccessLayerException {
 		List<User> userList =  new ArrayList<User>();
+		List<UserProfileDTO> userDTOList =  new ArrayList<UserProfileDTO>();
+
+		Session session=sessionFactory.openSession();
+		Criteria cr = session.createCriteria(UserProfileDTO.class);
+		 userDTOList = cr.list();
+		 for (UserProfileDTO userDTO : userDTOList) {
+			 User userDetails = new User();
+			 BeanUtils.copyProperties(userDTO, userDetails);
+			 userList.add(userDetails);
+		}
 		return userList;
 	}
+	
 
 	@Override
 	public User findUserByMobile(String mobile) throws DataAccessLayerException {
-
-		User userDetails = null;
-		final String query =" SELECT * FROM `rd_usr` WHERE `MOB_NO`=? ";	
-		try {
-			userDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{mobile}, new RowMapper<User>(){
-				@Override
-				public User mapRow(ResultSet rs, int rowNum) throws SQLException {
-					User user = new User();
-					user.setId(rs.getInt("ID"));
-					user.setFirstName(rs.getString("F_NM"));   
-					user.setLastName(rs.getString("L_NM"));
-				  //user.setPassword(rs.getString("USR_PWD"));
-					user.setOtp(rs.getString("OTP"));
-					user.setEmail(rs.getString("EML"));
-					user.setMobileNo(rs.getString("MOB_NO"));
-					user.setStatus(rs.getBoolean("ACTIVE"));
-					return user;
-				}});			
-		} catch (Exception excp) {						
-			throw new DataAccessLayerException("Error find user by Id",excp);
-		}
+		
+		User userDetails = new User();
+		Session session=sessionFactory.openSession();
+		Criteria cr = session.createCriteria(UserProfileDTO.class);
+		cr.add(Restrictions.eq("mobileNo", mobile));
+		UserProfileDTO userDTO = (UserProfileDTO)cr.uniqueResult();
+		BeanUtils.copyProperties(userDTO, userDetails);
 		
 		return userDetails;
 	}
@@ -154,75 +107,25 @@ public class UserDaoImpl implements UserDao{
  * ************/	
 	
 	@Override
-	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws DataAccessLayerException {
+	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws Exception {
 		
-		KeyHolder key = new GeneratedKeyHolder(); 
-	     final String query = SqlConstants.insert_rec_deatils;
-			try {
-				jdbcTemplate.update(new PreparedStatementCreator(){
-					public PreparedStatement createPreparedStatement(Connection connection)throws SQLException{					
-						PreparedStatement ps = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
-						ps.setString(1, recruiterProfile.getFullName());
-						ps.setString(2,"A");
-						ps.setString(3, Constants.UPLOAD_LOCATION);
-						ps.setString(4, recruiterProfile.getCompanyName());
-						ps.setString(5,recruiterProfile.getCompanyLocation());
-						ps.setString(6,recruiterProfile.getMobileNumber());
-						ps.setString(7,recruiterProfile.getCountry());
-					    ps.setString(8,recruiterProfile.getFlagHire());
-						ps.setString(9,recruiterProfile.getCreatedBy());
-						ps.setDate(10,null );
-						ps.setString(11,null);
-						ps.setString(12,null);
-						return ps;
-					}
-				},key);
-				recruiterProfile.setId(key.getKey().intValue());
-				return recruiterProfile;
-			} catch(Exception e) {
-				Logger.error(e.getMessage());
-				throw new DataAccessLayerException("Error while Inserting User", e);
-			}	
+		Session session=sessionFactory.openSession();
+		RecruiterProfileDTO recruiterProfileDTO=new RecruiterProfileDTO();
+		BeanUtils.copyProperties(recruiterProfile, recruiterProfileDTO);
+		session.save(recruiterProfileDTO);
+		BeanUtils.copyProperties(recruiterProfileDTO, recruiterProfile);
+		return recruiterProfile;
 	}
 
 	
-	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws DataAccessLayerException{
+	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws Exception{
+		Session session=sessionFactory.openSession();
+		JobPostingDetailsDTO jobPostingDetailsDTO=new JobPostingDetailsDTO();
+		BeanUtils.copyProperties(jobPostingForm, jobPostingDetailsDTO);
+		session.save(jobPostingDetailsDTO);
+		BeanUtils.copyProperties(jobPostingDetailsDTO, jobPostingForm);
+		return jobPostingForm;
 		
-		 KeyHolder key = new GeneratedKeyHolder(); 
-	     final String query = SqlConstants.insert_job_deatils;
-			try {
-				jdbcTemplate.update(new PreparedStatementCreator(){
-					public PreparedStatement createPreparedStatement(Connection connection)throws SQLException{					
-						PreparedStatement ps = connection.prepareStatement(query.toString(), Statement.RETURN_GENERATED_KEYS);
-
-
-					/*	JOB_ID,CATEGORY_ID,COMPANY_NAME,TITLE,DESCRIPTION,"
-								+ "LOCATION,EXP_REQUIRED,MIN_EXP,MAX_EXP,"
-								+ "CITY_ID,RECRUITER_ID,CREATED_DATE,"
-								+ "UPDATED_BY,CREATED_BY,LST_UPD_TS,STATUS,PUBLISH,ISNEW,APPROVE_BY_ADMIN,REJECT_COMMENT_BY_ADMIN				
-	*/					
-						/*ps.setString(1, Integer.valueOf(jobPostingForm.getId()));
-						ps.setString(2, Integer.valueOf(jobPostingForm.getId()));
-						ps.setString(3, jobPostingForm.getCompanyName());
-						ps.setString(4, jobPostingForm.getImp());
-						ps.setString(5, jobPostingForm.getMinWorkexp());
-						ps.setString(6, jobPostingForm.getMaxWorkexp());
-						ps.setString(7, jobPostingForm.getWorkLocation());
-						ps.setString(8, x);
-						ps.setString(9, x);
-						ps.setString(10, x);
-						ps.setString(11, x);
-						ps.setString(12, x);
-						ps.setString(13, x);*/
-						return ps;
-					}
-				},key);
-				jobPostingForm.setId(key.getKey().intValue());
-				return jobPostingForm;
-			}catch(Exception e) {
-				Logger.error(e.getMessage());
-				throw new DataAccessLayerException("Error while Inserting User", e);
-			}
 	}
 }
 	

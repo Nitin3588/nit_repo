@@ -100,7 +100,7 @@ margin: 0px;
 	</div>
 
 <form:form name="form1" id="form1" action="recruiterPostingJobs" modelAttribute="jobPostingForm">
-
+<form:errors path="*" element="p" />
 <table>
 <tr>
 <td>
