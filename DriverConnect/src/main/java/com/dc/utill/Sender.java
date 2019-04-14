@@ -14,95 +14,80 @@ import com.twilio.rest.api.v2010.account.Message;
 import com.twilio.type.PhoneNumber;
 
 public class Sender {
-	
+
 	private  static final Logger Logger = LoggerFactory.getLogger(Sender.class); 
 
-	// Username that is to be used for submission
 	String username;
-	// password that is to be used along with username
 	String password;
-	// Message content that is to be transmitted
 	String message;
-	/**
-	 * What type of the message that is to be sent
-	 * <ul>
-	 * <li>0:means plain text</li>
-	 * <li>1:means flash</li>
-	 * <li>2:means Unicode (Message content should be in Hex)</li>
-	 * <li>6:means Unicode Flash (Message content should be in Hex)</li>
-	 * </ul>
-	 */
 	String type;
-	/**
-	 * Require DLR or not
-	 * <ul>
-	 * <li>0:means DLR is not Required</li>
-	 * <li>1:means DLR is Required</li>
-	 * </ul>
-	 */
-	String dlr;
-	/**
-	 * Destinations to which message is to be sent For submitting more than one
-	 * destination at once destinations should be comma separated Like
-	 * 91999000123,91999000124
-	 */
 	String destination;
-	// Sender Id to be used for submitting the message
-	String source;
-	// To what server you need to connect to for submission
 	String server;
-	// Port that is to be used like 8080 or 8000
-	int port;
+	String senderid;
+	String tempid;
+
 
 	/*This logic is written for the system generated SMS to customer related activities related to the requirement RO_006 Description - Customer receives regular SMS on the progress of their complaints*/
-	public Sender(String server, int port, String username, String password,String message, String dlr, String type, String destination,String source) {
-		
+	public Sender(String server, String username, String password,String message, String type, String destination,String source) {
 		System.out.println("Getting data");
+		this.server = server;
 		this.username = username;
 		this.password = password;
 		this.message = message;
-		this.dlr = "1";
 		this.type = type;
 		this.destination = destination;
-		this.source = source;
-		this.server = server;
-		this.port = port;
-	}
 
+	}
 
 
 	public void sendMessage() throws IOException{
 		URL sendUrl = new URL("http://"+this.server);
-
 		HttpURLConnection httpConnection = (HttpURLConnection) sendUrl
 				.openConnection();
 	}
 
-	public void submitMessage() throws IOException {
+	   public static void sendSMS(String msg4, String destination) throws IOException {
 
+		//Sender 	sendSms =  new Sender(messageConfig.getProperty("server"),Integer.parseInt(messageConfig.getProperty("port")),messageConfig.getProperty("username"),messageConfig.getProperty("password"),otpSms, "0", "0", user.getMobNo(), messageConfig.getProperty("sender"));
+		String   server ="www.smsjust.com";
+		String   username = "algomatix";
+		String   password="222222";
+		String   senderid = "ALGVTS";
+		String   tempid="60085";
+		
+		String   msg1="Dear%20User%20your%20one%20Time%20passwo";
+		String   msg2="rd%20is";
+		String   msg3="%20";
+		String   msg5="%20Please%20do%20not%20share.";
+		String   url = "";
+		String message = "&F1="+msg1+"&F2="+msg2+"&F3="+msg3+"&F4="+msg4+"&F5="+msg5;
 
-		final String USER_AGENT = "Chrome/41.0.2227.1";
-		String url = "http://"+this.server+"/smpp/sendsms?username="+this.username+"&password="+this.password+"&to="+this.destination+"&from="+this.source+"&text=";
-		String message= this.message;
+		//final String USER_AGENT = "Chrome/41.0.2227.1";
+		 // url  = "http://www.smsjust.com/blank/sms/user/urlsmstemp.php?username=algomatix&pass=222222&senderid=ALGVTS&dest_mobileno=9892683023&tempid=60085&F1=Dear User&F2=your &F3=onetime  &F4=password &F5=is 456203 &response=Y";
+		
+		
+		//String message= this.message;
 		String encodedURL=java.net.URLEncoder.encode(message,"UTF-8");
-		String entireURL = url+encodedURL;
-		System.out.println("\n Entire URL :  "+entireURL);
-		URL obj = new URL(url+encodedURL);
+		System.out.println(encodedURL);
+		
+		url = "http://"+server+"/blank/sms/user/urlsmstemp.php?username="+username+"&pass="+password+"&senderid="+senderid+"&dest_mobileno="+destination+"&tempid="+tempid+message+"&response=Y";
+		
+		//String entireURL = url+encodedURL;
+		
+		//System.out.println("\n Entire URL :  "+entireURL);
+		//URL obj = new URL(url+encodedURL);
+		URL obj = new URL(url);
 		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
-
 		// optional default is GET
 		con.setRequestMethod("GET");
-
-		//add request header
-		con.setRequestProperty("User-Agent", USER_AGENT);
-
+		//con.setRequestProperty("User-Agent", USER_AGENT);
 		int responseCode = con.getResponseCode();
+		
+		
 		System.out.println("\nSending 'GET' request to URL : " + url);
-		System.out.println("\nSending 'GET' request to URL : " + encodedURL);
 		System.out.println("Response Code : " + responseCode);
-
-		BufferedReader in = new BufferedReader(
-				new InputStreamReader(con.getInputStream()));
+		
+		BufferedReader in = new BufferedReader(	new InputStreamReader(con.getInputStream()));
 		String inputLine;
 		StringBuffer response = new StringBuffer();
 
@@ -112,66 +97,29 @@ public class Sender {
 		in.close();
 
 		//print result
-		System.out.println(response.toString());
-	}
-	
-	public static void main(String[] args) {
-		try {
-			
-			
-			// Below exmaple is for sending Plain text
-			/*Sender s = new Sender("server", 8080, "xxxx",
-	"xxxx", "test for unicode", "1", "0", "440000xxx",
-	"Update");
-	s.submitMessage();
-	// Below exmaple is for sending unicode
-	Sender s1 = new Sender("server", 8080, "xxxx",	"xxx", convertToUnicode("test for unicode").toString(),	"1", "2", "44000xx", "Update");
-	s1.submitMessage();*/
-		} catch (Exception ex) {
-		}
-	}
-	
-	/**
-	 * Below method converts the unicode to hex value
-	 * @param regText
-	 * @return
-	 */
-	public static StringBuffer convertToUnicode(String regText) {
-		char[] chars = regText.toCharArray();
-		StringBuffer hexString = new StringBuffer();
-		for (int i = 0; i < chars.length; i++) {
-			String iniHexString = Integer.toHexString((int) chars[i]);
-			if (iniHexString.length() == 1)
-				iniHexString = "000" + iniHexString;
-			else if (iniHexString.length() == 2)
-				iniHexString = "00" + iniHexString;
-			else if (iniHexString.length() == 3)
-				iniHexString = "0" + iniHexString;
-			hexString.append(iniHexString);
-		}
-		System.out.println(hexString);
-		return hexString;
-	}
-	
-	
-	public static void  sendSMS(String sContent, String destination){
+		Logger.info(response.toString());
 		
-	String sid =	Constants.PRIVATE_AUTH_TSID; 
-	String token =	Constants.PRIVATE_AUTH_TOKEN; 
-	Twilio.init(sid, token);
-	
-	// replaced  destination  with constant for testing 
-	try {
-		
-		Message message = Message.creator( new PhoneNumber("919892683023"), new PhoneNumber("+19727374399"),sContent).create();
-		Logger.info("SNMS sent " + message.getStatus());
-		
-	} catch (Exception e) {
+		Logger.info(con.getResponseMessage());
+	}
 
-		e.printStackTrace();
-	} 
-	
-		
+
+
+	/*public static void  sendSMS(String sContent, String destination){
+
+		String sid =	Constants.PRIVATE_AUTH_TSID; 
+		String token =	Constants.PRIVATE_AUTH_TOKEN; 
+		Twilio.init(sid, token);
+		try {
+
+			Message message = Message.creator( new PhoneNumber("919892683023"), new PhoneNumber("+19727374399"),sContent).create();
+			Logger.info("SNMS sent " + message.getStatus());
+
+		} catch (Exception e) {
+
+			e.printStackTrace();
+		} 
+
+
 	}
-	
+*/
 }	

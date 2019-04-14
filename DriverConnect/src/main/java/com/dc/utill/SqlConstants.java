@@ -4,7 +4,8 @@ import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 
 public class SqlConstants {
-	
+
+public static final int PAGESIZE= 10;	
 
 public	static DateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
 
@@ -18,6 +19,9 @@ public static final String insert_rec_deatils = "INSERT INTO  `recruiter_details
 
 public static final String  insert_otp_deatils = "INSERT INTO `dc_otp` (`MOB_NO`,`OTP`,`CRTD_BY`,`CRTD_TMSTMP`,`MOD_BY`,`MOD_TMSTMP`,`EXP_TMSTMP`) VALUES (?,?,?,?,?,?,?)";
 
+public static final String fetch_all_Applicants ="select * from dc_sub_usr where ID in ( select SUBSCRIBER_ID from dc_job_request where JOB_ID_FK = ? )";
+
+public static final String fetch_all_Applied_Jobs ="select * from dc_job where JOB_ID in ( select JOB_ID_FK from dc_job_request where SUBSCRIBER_ID = ? ) ";
 
 
 public static final String  insert_job_deatils = "insert into dc_job (JOB_ID,CATEGORY_ID,COMPANY_NAME,TITLE,DESCRIPTION,"

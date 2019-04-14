@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dc.bean.User;
+import com.dc.bean.UserProfileForm;
 
 @Controller
 public class SubscriberContactDetailsController {
@@ -23,7 +23,7 @@ public class SubscriberContactDetailsController {
 	
 	
 	@RequestMapping(value = "/contactDetails", method = RequestMethod.GET)
-	public ModelAndView subscriberContactDetails(HttpServletRequest request, HttpServletResponse response,HttpSession session,@ModelAttribute User user) {
+	public ModelAndView subscriberContactDetails(HttpServletRequest request, HttpServletResponse response,HttpSession session,@ModelAttribute UserProfileForm user) {
 		//Redirecting to Subscriber's contact details page
 		Logger.info("Entering into subscriber's contact details page");
 		ModelAndView mav = new ModelAndView("registration");
@@ -43,7 +43,7 @@ public class SubscriberContactDetailsController {
 	
 	@RequestMapping(value = "/contactDetails", method = RequestMethod.POST)
 	public ModelAndView addSubscriberContactDetails(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,@ModelAttribute User user,BindingResult result) {
+			HttpSession session,@ModelAttribute UserProfileForm user,BindingResult result) {
 		////saving Subscriber's contact details 
 		Logger.info("Before saving details into subscriber's contact details table");
 		
@@ -84,7 +84,7 @@ public class SubscriberContactDetailsController {
 		return mav;
 	}
 	
-	public void validateContactDetailFields(User user,BindingResult result) {
+	public void validateContactDetailFields(UserProfileForm user,BindingResult result) {
 		
 	}
 	

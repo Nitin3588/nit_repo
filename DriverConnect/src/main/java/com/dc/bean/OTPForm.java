@@ -3,7 +3,7 @@ package com.dc.bean;
 import java.security.Timestamp;
 import java.util.Date;
 
-public class OTP extends AbstractBean{
+public class OTPForm extends AbstractBean{
 
 	private Timestamp expDate;
 	private String  mobileNumber;

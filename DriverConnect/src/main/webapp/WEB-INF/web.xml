@@ -8,8 +8,9 @@
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>
-			/WEB-INF/config/app-config.xml
-			/WEB-INF/config/db-config.xml
+			/WEB-INF/config/web-config.xml
+			<!-- /WEB-INF/config/app-config.xml
+			/WEB-INF/config/db-config.xml -->
 		</param-value>
 	</context-param>
 

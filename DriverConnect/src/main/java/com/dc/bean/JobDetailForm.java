@@ -1,24 +1,57 @@
 package com.dc.bean;
 
+import java.io.Serializable;
+import java.math.BigInteger;
 import java.util.Date;
 
-public class JobPostingForm {
 
-	  private int id;
-	  private String jobId;
-	  private int categoryId;
-	  private String companyName;
-	  private String jobTitle;
-	  private String description;
-	  private String workLocation;
-	  private String expReq;
-	  private int minWorkexp;
-	  private int maxWorkexp;
-	  private int cityId;
-	  private int recId;
-	  private Date crtdDate;
-	  
-	  public String getJobTitle() {
+public class JobDetailForm implements Serializable{
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	private BigInteger id;
+	private String jobId;
+	private int categoryId;
+	private String companyName;
+	private String jobTitle;
+	private String description;
+	private String workLocation;
+	private String expReq;
+	private int minWorkexp;
+	private int maxWorkexp;
+	private int cityId;
+	private BigInteger recId;
+	private Date crtdDate;
+
+	private int updBy;
+	private int crtBy;
+	private Date lstUpdStatus;
+	private boolean status;
+	private boolean publish;
+	private boolean isNew;
+	private boolean appByAdmin;
+	private String rejComByAdmin;
+	private String imp;
+	private String hiringFlag;
+	private String designation;
+
+	private String contact;
+	private String email;
+	private String employmentType;
+	private Integer salaryAnnual;
+	private String  vechicleType; 
+	
+	private String companyAddress;
+	private Date   expiryDate;
+
+	
+	private boolean applyStatus =false;
+		
+	
+	public String getJobTitle() {
 		return jobTitle;
 	}
 	public void setJobTitle(String jobTitle) {
@@ -42,22 +75,8 @@ public class JobPostingForm {
 	public void setMaxWorkexp(int maxWorkexp) {
 		this.maxWorkexp = maxWorkexp;
 	}
-	private int updBy;
-	  private int crtBy;
-	  private Date lstUpdStatus;
-	  private boolean status;
-	  private boolean publish;
-	  private boolean isNew;
-	  private boolean appByAdmin;
-	  private String rejComByAdmin;
-	  private String Emptype;
-	  private String imp;
-	  private String hiringFlag;
-	  
-	  
-	  
-	  
-	  
+
+
 	public String getHiringFlag() {
 		return hiringFlag;
 	}
@@ -70,16 +89,10 @@ public class JobPostingForm {
 	public void setImp(String imp) {
 		this.imp = imp;
 	}
-	public String getEmptype() {
-		return Emptype;
-	}
-	public void setEmptype(String emptype) {
-		Emptype = emptype;
-	}
-	public int getId() {
+	public BigInteger getId() {
 		return id;
 	}
-	public void setId(int id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 	public String getJobId() {
@@ -118,10 +131,10 @@ public class JobPostingForm {
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
 	}
-	public int getRecId() {
+	public BigInteger getRecId() {
 		return recId;
 	}
-	public void setRecId(int recId) {
+	public void setRecId(BigInteger recId) {
 		this.recId = recId;
 	}
 	public Date getCrtdDate() {
@@ -178,7 +191,56 @@ public class JobPostingForm {
 	public void setRejComByAdmin(String rejComByAdmin) {
 		this.rejComByAdmin = rejComByAdmin;
 	}
+
 	
+	public String getDesignation() {
+		return designation;
+	}
+	public void setDesignation(String designation) {
+		this.designation = designation;
+	}
+	public String getContact() {
+		return contact;
+	}
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+	public String getEmail() {
+		return email;
+	}
+	public void setEmail(String email) {
+		this.email = email;
+	}
+	public String getCompanyAddress() {
+		return companyAddress;
+	}
+	public void setCompanyAddress(String companyAddress) {
+		this.companyAddress = companyAddress;
+	}
+	public String getEmploymentType() {
+		return employmentType;
+	}
+	public void setEmploymentType(String employmentType) {
+		this.employmentType = employmentType;
+	}
+	public Integer getSalaryAnnual() {
+		return salaryAnnual;
+	}
+	public void setSalaryAnnual(Integer salaryAnnual) {
+		this.salaryAnnual = salaryAnnual;
+	}
+	public Date getExpiryDate() {
+		return expiryDate;
+	}
+	public void setExpiryDate(Date expiryDate) {
+		this.expiryDate = expiryDate;
+	}
+	public boolean isApplyStatus() {
+		return applyStatus;
+	}
+	public void setApplyStatus(boolean applyStatus) {
+		this.applyStatus = applyStatus;
+	}
 	
 	
 }

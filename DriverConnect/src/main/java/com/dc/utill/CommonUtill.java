@@ -1,6 +1,8 @@
 package com.dc.utill;
 
-import java.sql.Date;
+import java.math.BigInteger;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Random;
 
 import org.slf4j.Logger;
@@ -32,11 +34,28 @@ public class CommonUtill {
 	}
 	
 	
+	public static  String generateJObAckId(String recID){
+		Logger.info("Generating JOB ID random() : "); 
+		String jid = "J";
+		Date date = new Date();
+		SimpleDateFormat ft = new SimpleDateFormat("ddMMyyhhss");
+        String datetime = ft.format(date);
+	    jid = jid.concat(datetime.concat(recID));
+		Logger.info("You JOB ID is : {}",jid); 
+	    return new String(jid); 
+		}
+	
+	
 	public static Date convertToDbInsertDate(java.util.Date date){
 		Date dateDb =  new Date(date.getTime());
 		return dateDb ;
 		} 	
 	
+	
+	
+	public static BigInteger convertTOBigInteger(String id) {
+		return BigInteger.valueOf(Long.valueOf(id));
+	}
 }
 	
 	

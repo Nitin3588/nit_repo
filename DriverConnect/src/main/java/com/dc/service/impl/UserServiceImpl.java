@@ -1,5 +1,6 @@
 package com.dc.service.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -8,58 +9,96 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.dc.bean.JobPostingForm;
-import com.dc.bean.OTP;
-import com.dc.bean.RecruiterProfile;
-import com.dc.bean.User;
+import com.dc.bean.CompanyProfileForm;
+import com.dc.bean.RecruiterProfileForm;
+import com.dc.bean.UserProfileForm;
+import com.dc.dao.CompanyDao;
 import com.dc.dao.UserDao;
+import com.dc.dto.RecruiterProfileDTO;
+import com.dc.dto.UserProfileDTO;
+import com.dc.exception.ApplicationException;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.UserService;
 
-
+@Service("UserService")
 @Transactional
-@Service
 public class UserServiceImpl implements UserService {
 
 	@Autowired
 	UserDao userDao;
 	
+	@Autowired 
+	CompanyDao companyDao;
+	
 	private  static final Logger Logger = LoggerFactory.getLogger(UserServiceImpl.class); 
 
-	public User saveUser(User user) throws DataAccessLayerException{
+	public UserProfileForm saveUser(UserProfileForm user) throws DataAccessLayerException{
 		return userDao.saveUser(user);
 	}
 
-	public void deleteUser(int Id) throws DataAccessLayerException {
-		userDao.deleteUser(Id);
+	public boolean deleteUser(Integer Id) throws DataAccessLayerException {
+		return userDao.deleteUser(Id);
 	}
 
-	public void updateUser(User user) throws DataAccessLayerException {
-		userDao.updateUser(user);
-	}
-
-	@Override
-	public List<User> findAllusers() throws DataAccessLayerException {
-		return userDao.findAllusers();
+	public UserProfileForm updateUser(UserProfileForm user) throws DataAccessLayerException {
+		return userDao.updateUser(user);
 	}
 
 	@Override
-	public User findUserById(int userId) throws DataAccessLayerException {
+	public List<UserProfileForm> findAllusers(int offset) throws DataAccessLayerException {
+		return userDao.findAllusers(offset);
+	}
+
+	@Override
+	public UserProfileDTO findUserById(BigInteger userId) throws DataAccessLayerException {
 		return  userDao.findUserById(userId);
 	}
 
 	@Override
-	public User findUserByMobile(String mobile) throws DataAccessLayerException {
+	public UserProfileForm findUserByMobile(String mobile) throws DataAccessLayerException {
 		return  userDao.findUserByMobile(mobile);
+	}
+	
+	
+	@Override
+	@Transactional
+	public RecruiterProfileForm saveRecruiterProfile(RecruiterProfileForm recruiterProfile) 
+			throws DataAccessLayerException, ApplicationException{
+		 Logger.info("in saveRecruiterProfile");
+		 CompanyProfileForm  company =  companyDao.saveCompanyDetails(recruiterProfile.getCompanyProfileForm());
+		 recruiterProfile.setCompanyProfileForm(company);
+		 recruiterProfile  = userDao.saveRecruiterProfile(recruiterProfile);
+		 return recruiterProfile;
 	}
 
 	@Override
-	public RecruiterProfile saveRecruiterProfile(RecruiterProfile recruiterProfile) throws Exception{
-		return userDao.saveRecruiterProfile(recruiterProfile);
+	public RecruiterProfileForm updateRecruiterProfile(RecruiterProfileForm recruiterProfile) throws DataAccessLayerException {
+		return userDao.updateRecruiterProfile(recruiterProfile);
+	}
+
+	@Override
+	public RecruiterProfileForm findRecruiterProfile(String mobile) throws DataAccessLayerException {
+		 return userDao.findRecruiterProfile(mobile);
 	}
 	
-	public JobPostingForm saveJobPostingDetails(JobPostingForm jobPostingForm) throws Exception{
-		return userDao.saveJobPostingDetails(jobPostingForm);
+	@Override
+	public RecruiterProfileDTO findRecruiterById(BigInteger Id) throws DataAccessLayerException {
+		return userDao.findRecruiterById(Id);
 	}
+	
+	
+	public boolean findRecruiterProfileAlreadyExistOrNot(RecruiterProfileForm recruiter) throws DataAccessLayerException{
+		return userDao.findRecruiterProfileAlreadyExistOrNot(recruiter);
+	}
+	
+	public boolean findRecruiterProfileAlreadyExistOrNotById(RecruiterProfileForm recruiter) throws DataAccessLayerException{
+		return userDao.findRecruiterProfileAlreadyExistOrNotById(recruiter);
+	}
+
+	@Override
+	public List<UserProfileForm> findApplicantForJob(String job_id ,int offset) throws DataAccessLayerException {
+		return userDao.findApplicantForJob(job_id ,offset);
+	}
+
 	
 }

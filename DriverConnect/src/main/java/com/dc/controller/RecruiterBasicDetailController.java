@@ -13,8 +13,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dc.bean.RecruiterProfile;
-import com.dc.bean.User;
+import com.dc.bean.RecruiterProfileForm;
+import com.dc.bean.UserProfileForm;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.UserService;
 
@@ -28,7 +28,7 @@ public class RecruiterBasicDetailController {
 	private  static final Logger Logger = LoggerFactory.getLogger(UserController.class);
 	
 	@RequestMapping(value = "/redirectToDetails", method = RequestMethod.GET)
-	public ModelAndView recruitersBasicDetails(@ModelAttribute("recruiterProfile")RecruiterProfile recruiterProfile,HttpServletRequest request, HttpServletResponse response,
+	public ModelAndView recruitersBasicDetails(@ModelAttribute("recruiterProfile")RecruiterProfileForm recruiterProfile,HttpServletRequest request, HttpServletResponse response,
 			HttpSession session) {
 		ModelAndView mav = new ModelAndView("recruiterPersonalDetails");
 		Logger.info("in recruitBasicDetails" );
@@ -38,7 +38,7 @@ public class RecruiterBasicDetailController {
 	
 	@RequestMapping(value = "/recruitBasicDetails", method = RequestMethod.POST)
 	public ModelAndView addRecruitersBasicDetails(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,@ModelAttribute RecruiterProfile recruiterProfile) {
+			HttpSession session,@ModelAttribute RecruiterProfileForm recruiterProfile) {
 		ModelAndView mav = new ModelAndView("recruiterCompanyDetails");
 		
 		/*RecruiterProfile recruiter = new RecruiterProfile();
@@ -63,7 +63,7 @@ public class RecruiterBasicDetailController {
 	
 	@RequestMapping(value = "/recruiterCompanyDetails", method = RequestMethod.POST)
 	public ModelAndView addRecruiterCompanyDetails(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,@ModelAttribute User user) {
+			HttpSession session,@ModelAttribute UserProfileForm user) {
 		ModelAndView mav = new ModelAndView("success");
 		return mav;
 	}

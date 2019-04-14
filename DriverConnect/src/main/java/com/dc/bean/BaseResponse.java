@@ -1,9 +1,19 @@
 package com.dc.bean;
 public class BaseResponse {
+	
+	
 	private String status;
 	private String code;
+	private Object obj = null;
+	private String message =null;
 	
 	
+	public Object getObj() {
+		return obj;
+	}
+	public void setObj(Object obj) {
+		this.obj = obj;
+	}
 	public String getStatus() {
 		return status;
 	}
@@ -16,4 +26,12 @@ public class BaseResponse {
 	public void setCode(String code) {
 		this.code = code;
 	}
+	public String getMessage() {
+		return message;
+	}
+	public void setMessage(String message) {
+		this.message = message;
+	}
+	
+	
 }

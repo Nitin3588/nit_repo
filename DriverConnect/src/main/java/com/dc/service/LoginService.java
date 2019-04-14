@@ -1,10 +1,10 @@
 package com.dc.service;
 
-import com.dc.bean.User;
+import com.dc.bean.UserProfileForm;
 
 public interface LoginService {
 
 	
-	 void login(User user); 
+	 void login(UserProfileForm user); 
 	
 }

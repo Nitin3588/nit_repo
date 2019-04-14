@@ -1,5 +1,6 @@
 package com.dc.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -8,16 +9,17 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 @Entity
 @Table(name="dc_job")
-public class JobPostingDetailsDTO {
+public class JobDetailDTO {
 
 	
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	  private int id;
+	  private BigInteger id;
 
 	@Column(name="JOB_ID")
 	  private String jobId;
@@ -50,7 +52,7 @@ public class JobPostingDetailsDTO {
 	  private int cityId;
 
 	@Column(name="RECRUITER_ID")
-	  private int recId;
+	  private BigInteger recId;
 
 	@Column(name="CREATED_DATE")
 	  private Date crtdDate;
@@ -79,11 +81,28 @@ public class JobPostingDetailsDTO {
 	@Column(name="REJECT_COMMENT_BY_ADMIN")
 	  private String rejComByAdmin;
 
-	public int getId() {
+	@Column(name="CONTACT")
+	private String contact;
+	
+	@Column(name="EML")
+	private String email;
+	
+	
+	@Column(name="EMP_TYPE")
+	private String employmentType;
+	
+	@Column(name="VECHICLE_TYPE")
+	private String  vechicleType; 
+	
+	@Column(name="SALARY_ANNUAL")
+	private Integer salaryAnnual;
+	
+	
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(BigInteger id) {
 		this.id = id;
 	}
 
@@ -170,11 +189,11 @@ public class JobPostingDetailsDTO {
 		this.cityId = cityId;
 	}
 
-	public int getRecId() {
+	public BigInteger getRecId() {
 		return recId;
 	}
 
-	public void setRecId(int recId) {
+	public void setRecId(BigInteger recId) {
 		this.recId = recId;
 	}
 
@@ -249,11 +268,46 @@ public class JobPostingDetailsDTO {
 	public void setRejComByAdmin(String rejComByAdmin) {
 		this.rejComByAdmin = rejComByAdmin;
 	}
-	
-	
-	
-	
-	
-	
+
+	public String getContact() {
+		return contact;
+	}
+
+	public void setContact(String contact) {
+		this.contact = contact;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmploymentType() {
+		return employmentType;
+	}
+
+	public void setEmploymentType(String employmentType) {
+		this.employmentType = employmentType;
+	}
+
+	public String getVechicleType() {
+		return vechicleType;
+	}
+
+	public void setVechicleType(String vechicleType) {
+		this.vechicleType = vechicleType;
+	}
+
+	public Integer getSalaryAnnual() {
+		return salaryAnnual;
+	}
+
+	public void setSalaryAnnual(Integer salaryAnnual) {
+		this.salaryAnnual = salaryAnnual;
+	}
+
 	
 }

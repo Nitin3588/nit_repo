@@ -14,6 +14,29 @@
     <mvc:annotation-driven/>
     <context:component-scan base-package="com.dc"/>
     
+    <!-- <import resource="WEB-INF/config/db-config.xml"/>
+    <import resource="WEB-INF/config/app-config.xml"/> -->
+    <import resource="classpath*:app-config.xml" />
+    <import resource="classpath*:db-config.xml" />
+    
+    
+     <bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+	  <property name="locations">
+	    <list>
+		  <value>classpath:app-config.properties</value>
+		  <value>classpath:db-config.properties</value>
+	    </list>
+	  </property>
+	  <property name="ignoreResourceNotFound" value="true"/>
+	</bean>
+    
+    
+     <bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- one of the several properties available; the maximum file size in bytes -->
+        <property name="maxUploadSizePerFile" value="5242880"/>
+    </bean>
+    
+    
     <mvc:resources mapping="/static/**" location="/WEB-INF/static/"/>
     <mvc:default-servlet-handler />
 

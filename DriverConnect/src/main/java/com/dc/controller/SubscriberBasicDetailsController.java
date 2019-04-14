@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.dc.bean.User;
+import com.dc.bean.UserProfileForm;
 
 @Controller
 public class SubscriberBasicDetailsController {
@@ -24,7 +24,7 @@ public class SubscriberBasicDetailsController {
 	
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.GET)
 	public ModelAndView subscriberBasicDetails(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,@ModelAttribute User user) {
+			HttpSession session,@ModelAttribute UserProfileForm user) {
 		
 		//Redirecting to Subscriber's basic details page
 		Logger.info("Entering into subscriber's basic details page");
@@ -47,7 +47,7 @@ public class SubscriberBasicDetailsController {
 	
 	@RequestMapping(value = "/basicDetails", method = RequestMethod.POST)
 	public ModelAndView addSubscriberBasicDetails(HttpServletRequest request, HttpServletResponse response,
-			HttpSession session,@ModelAttribute User user,BindingResult result) {
+			HttpSession session,@ModelAttribute UserProfileForm user,BindingResult result) {
 		
 		//Saving subscriber's basic details 
 		
@@ -86,7 +86,7 @@ public class SubscriberBasicDetailsController {
 	
 	
 	
-	public void validateBasicDetailFields(User user,BindingResult result) {
+	public void validateBasicDetailFields(UserProfileForm user,BindingResult result) {
 			String subscriberFullName=user.getUserName();
 			String dob=user.getDob();
 			String licenseNumber = user.getLicenseNumber();

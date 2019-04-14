@@ -11,63 +11,106 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="dc_sub_usr")
+@Table(name = "dc_sub_usr")
 public class UserProfileDTO {
 
-
 	@Id
-	@Column(name="ID")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	@Column(name = "ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private BigInteger id;
 
-	@Column(name="F_NM")
-	private String firstName; 
+	@Column(name = "F_NM")
+	private String firstName;
 
-	@Column(name="L_NM") 
+	@Column(name = "L_NM")
 	private String lastName;
 
-	@Column(name="MOB_NO") 
-	private String mobileNo;  
+	@Column(name = "MOB_NO")
+	private String mobileNo;
 
-	@Column(name="USR_NM") 
-	private String userName;  
+	@Column(name = "USR_NM")
+	private String userName;
 
-	@Column(name="USR_PWD") 
-	private String password;  
+	@Column(name = "USR_PWD")
+	private String password;
 
-	@Column(name="EML") 
-	private String email;  
+	@Column(name = "EML")
+	private String email;
 
-	@Column(name="OTP") 
-	private String otp;  
+	@Column(name = "PHOTO_NAME")
+	private String photoName;
 
-	@Column(name="DOB") 
-	private String dob;  
-
-	@Column(name="CITY_ID") 
-	private String cityId;  
+	@Column(name = "PHOTO_PATH")
+	private String photoPath;
 	
-	@Column(name="STATUS") 
-	private boolean status;  
+	@Column(name = "OTP")
+	private String otp;
 
-	@Column(name="AUTH_PASS_FLAG") 
-	private boolean authPassFlag;  
-	
-	@Column(name="PASS_RESET") 
-	private boolean passReset;  
+	@Column(name = "DOB")
+	private String dob;
 
-	@Column(name="CREATED_BY")
+	@Column(name = "LICENSE_NO")
+	private String licenseNumber;
+
+	@Column(name = "EXP_DATE")
+	private String expDate;
+
+	@Column(name = "ADDRESS")
+	private String address;
+
+	@Column(name = "STATE_ID")
+	private Integer stateId;
+
+	@Column(name = "PINCODE")
+	private Integer pinCode;
+
+	@Column(name = "CITY_ID")
+	private String cityId;
+
+	@Column(name = "AUTH_PASS_FLAG")
+	private boolean authPassFlag;
+
+	@Column(name = "PASS_RESET")
+	private boolean passReset;
+
+	@Column(name = "CREATED_BY")
 	private int createdBy;
 
-	@Column(name="CREATED_DATE")
+	@Column(name = "CREATED_DATE")
 	private Date createdDate;
 
-	@Column(name="UPDATED_BY")
+	@Column(name = "UPDATED_BY")
 	private int mdfdBy;
 
-	@Column(name="MOD_TMSTMP")
+	@Column(name = "MOD_TMSTMP")
 	private Date mdfdDate;
 
+	@Column(name = "STATUS")
+	private boolean status;
+
+	@Column(name = "FIREBASE_ID")
+	private String fireBaseId;
+	
+	@Column(name = "CURRENT_WORK_DETAIL")
+	private String currentWorkDetail;
+
+	@Column(name = "TOTAL_EXP")
+	private String totalExp;
+	
+	@Column(name = "CURRENT_WORK_LOCATION")
+	private String currentWorkLocation;
+	
+	@Column(name = "PROF_SUMMARY")
+	private String profSummary;
+	
+	@Column(name = "HIGH_QUALIFICATION")
+	private String highQualification;
+	
+	@Column(name = "LANG_KNOWN")
+	private String langKnown;
+	
+	
+	
 	public BigInteger getId() {
 		return id;
 	}
@@ -100,7 +143,6 @@ public class UserProfileDTO {
 		this.mobileNo = mobileNo;
 	}
 
-
 	public String getUserName() {
 		return userName;
 	}
@@ -125,6 +167,22 @@ public class UserProfileDTO {
 		this.email = email;
 	}
 
+	public String getPhotoName() {
+		return photoName;
+	}
+
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
+
+	public String getPhotoPath() {
+		return photoPath;
+	}
+
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
+	}
+
 	public String getOtp() {
 		return otp;
 	}
@@ -141,6 +199,38 @@ public class UserProfileDTO {
 		this.dob = dob;
 	}
 
+	public String getLicenseNumber() {
+		return licenseNumber;
+	}
+
+	public void setLicenseNumber(String licenseNumber) {
+		this.licenseNumber = licenseNumber;
+	}
+
+	public String getExpDate() {
+		return expDate;
+	}
+
+	public void setExpDate(String expDate) {
+		this.expDate = expDate;
+	}
+
+	public Integer getStateId() {
+		return stateId;
+	}
+
+	public void setStateId(Integer stateId) {
+		this.stateId = stateId;
+	}
+
+	public Integer getPinCode() {
+		return pinCode;
+	}
+
+	public void setPinCode(Integer pinCode) {
+		this.pinCode = pinCode;
+	}
+
 	public String getCityId() {
 		return cityId;
 	}
@@ -148,7 +238,6 @@ public class UserProfileDTO {
 	public void setCityId(String cityId) {
 		this.cityId = cityId;
 	}
-
 
 	public boolean isStatus() {
 		return status;
@@ -174,7 +263,6 @@ public class UserProfileDTO {
 		this.passReset = passReset;
 	}
 
-	
 	public int getCreatedBy() {
 		return createdBy;
 	}
@@ -190,7 +278,6 @@ public class UserProfileDTO {
 	public void setCreatedDate(Date createdDate) {
 		this.createdDate = createdDate;
 	}
-
 
 	public int getMdfdBy() {
 		return mdfdBy;
@@ -208,14 +295,60 @@ public class UserProfileDTO {
 		this.mdfdDate = mdfdDate;
 	}
 
-	
+	public String getFireBaseId() {
+		return fireBaseId;
+	}
 
-/*	private String address;
-	private String userType;
-	private String licenseNumber;
-	private String expDate;
-	private String password;
-	private String confirmPassword;
+	public void setFireBaseId(String fireBaseId) {
+		this.fireBaseId = fireBaseId;
+	}
 
-*/
+	public String getCurrentWorkDetail() {
+		return currentWorkDetail;
+	}
+
+	public void setCurrentWorkDetail(String currentWorkDetail) {
+		this.currentWorkDetail = currentWorkDetail;
+	}
+
+	public String getTotalExp() {
+		return totalExp;
+	}
+
+	public void setTotalExp(String totalExp) {
+		this.totalExp = totalExp;
+	}
+
+	public String getCurrentWorkLocation() {
+		return currentWorkLocation;
+	}
+
+	public void setCurrentWorkLocation(String currentWorkLocation) {
+		this.currentWorkLocation = currentWorkLocation;
+	}
+
+	public String getProfSummary() {
+		return profSummary;
+	}
+
+	public void setProfSummary(String profSummary) {
+		this.profSummary = profSummary;
+	}
+
+	public String getHighQualification() {
+		return highQualification;
+	}
+
+	public void setHighQualification(String highQualification) {
+		this.highQualification = highQualification;
+	}
+
+	public String getLangKnown() {
+		return langKnown;
+	}
+
+	public void setLangKnown(String langKnown) {
+		this.langKnown = langKnown;
+	}
+
 }

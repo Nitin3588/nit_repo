@@ -1,39 +1,62 @@
 package com.dc.bean;
 
+import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
 
 import org.springframework.web.multipart.MultipartFile;
 
-public class User {
+public class UserProfileForm implements Serializable{
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
 	private BigInteger id;
 	private String firstName;
 	private String lastName;
 	private String mobileNo;
-	private String address;
 	private String userType;
 	private String email;
+	private String  photoName;
+	private String  photoPath;
+	
 	private String otp;
 	private String dob;
 	private String licenseNumber;
 	private String expDate;
 	
+	private String address;
+	private Integer cityId;
+	private Integer stateId;
+	private Integer pinCode;
+	
+	private String userName;
 	private String password;
 	private String confirmPassword;
-	private String userName;
-	private Integer cityId;
-	
 	private Date createdDate;
 	private int createdBy;
 	private Date mdfdDate;
 	private int mdfdBy;
 	
 	private String userloginId;
+	private String fireBaseId;
 	private boolean status;
+	
+	private String currentWorkDetail;
+	private String totalExp;
+	private String currentWorkLocation;
+	private String profSummary;
+	private String highQualification;
+	private String langKnown;
+	
 	
 	
 	private MultipartFile file;  
+
+	
+	
 	
 	public MultipartFile getFile() {
 		return file;
@@ -85,6 +108,18 @@ public class User {
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	public String getPhotoName() {
+		return photoName;
+	}
+	public void setPhotoName(String photoName) {
+		this.photoName = photoName;
+	}
+	public String getPhotoPath() {
+		return photoPath;
+	}
+	public void setPhotoPath(String photoPath) {
+		this.photoPath = photoPath;
+	}
 	public String getOtp() {
 		return otp;
 	}
@@ -134,6 +169,18 @@ public class User {
 	public void setCityId(Integer cityId) {
 		this.cityId = cityId;
 	}
+	public Integer getStateId() {
+		return stateId;
+	}
+	public void setStateId(Integer stateId) {
+		this.stateId = stateId;
+	}
+	public Integer getPinCode() {
+		return pinCode;
+	}
+	public void setPinCode(Integer pinCode) {
+		this.pinCode = pinCode;
+	}
 	public Date getCreatedDate() {
 		return createdDate;
 	}
@@ -167,9 +214,51 @@ public class User {
 	public String getUserloginId() {
 		return userloginId;
 	}
+	
 	public void setUserloginId(String userloginId) {
 		this.userloginId = userloginId;
 	}
-
 	
+	public String getFireBaseId() {
+		return fireBaseId;
+	}
+	public void setFireBaseId(String fireBaseId) {
+		this.fireBaseId = fireBaseId;
+	}
+	public String getCurrentWorkDetail() {
+		return currentWorkDetail;
+	}
+	public void setCurrentWorkDetail(String currentWorkDetail) {
+		this.currentWorkDetail = currentWorkDetail;
+	}
+	public String getTotalExp() {
+		return totalExp;
+	}
+	public void setTotalExp(String totalExp) {
+		this.totalExp = totalExp;
+	}
+	public String getCurrentWorkLocation() {
+		return currentWorkLocation;
+	}
+	public void setCurrentWorkLocation(String currentWorkLocation) {
+		this.currentWorkLocation = currentWorkLocation;
+	}
+	public String getProfSummary() {
+		return profSummary;
+	}
+	public void setProfSummary(String profSummary) {
+		this.profSummary = profSummary;
+	}
+	public String getHighQualification() {
+		return highQualification;
+	}
+	public void setHighQualification(String highQualification) {
+		this.highQualification = highQualification;
+	}
+	public String getLangKnown() {
+		return langKnown;
+	}
+	public void setLangKnown(String langKnown) {
+		this.langKnown = langKnown;
+	}
 }

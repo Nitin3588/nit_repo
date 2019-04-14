@@ -1,21 +1,23 @@
 package com.dc.service;
 
-import com.dc.bean.User;
+import java.io.IOException;
+
+import com.dc.bean.UserProfileForm;
 
 public interface MailingService {
 	
-	void sendConfirmRegistrationMail(User user);
+	void sendConfirmRegistrationMail(UserProfileForm user);
 	
-	void sendForgotPasswordMail(User user);
+	void sendForgotPasswordMail(UserProfileForm user);
 	
-	void sendChangePasswordMail(User user);
+	void sendChangePasswordMail(UserProfileForm user);
 	
-	void sendNewOtpMail(User user);
+	void sendNewOtpMail(UserProfileForm user);
 	
-	void sendUserCredentials(User user);
+	void sendUserCredentials(UserProfileForm user);
 	
 	void sendEmail(String eSubject, String eContent, String recipient);
 
-	void sendSMS(String sContent, String mobile);
+	void sendSMS(String sContent, String mobile)throws IOException;
 
 }

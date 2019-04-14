@@ -1,5 +1,6 @@
 package com.dc.dto;
 
+import java.math.BigInteger;
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -10,64 +11,90 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="dc_recruiter_details")
+@Table(name = "dc_recruiter_details")
 public class RecruiterProfileDTO {
-	
-	
+
 	@Id
-	@Column(name="REC_ID")
-	@GeneratedValue(strategy=GenerationType.IDENTITY)
-	private Integer id;
-	
-	@Column(name="FULL_NAME")
-	private String 	fullName;
+	@Column(name = "REC_ID")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private BigInteger id;
 
-	  
-	@Column(name="PHOTO_NAME")
-	private String  photoName;
+	@Column(name = "F_NM")
+	private String firstName;
 
-	  
-	@Column(name="PHOTO_PATH")
-	private String  photoPath;
+	@Column(name = "L_NM")
+	private String lastName;
 
-	  
-	@Column(name="COMPANY_NAME")
-	private String  companyName;
+	@Column(name = "FULL_NAME")
+	private String fullName;
 
-	  
-	@Column(name="COMPANY_LOCATION")
-	private String  companyLocation;
+	@Column(name = "PHOTO_NAME")
+	private String photoName;
 
-	  
-	@Column(name="MOBILE_NUMBER")
-	private String  mobileNumber;
+	@Column(name = "PHOTO_PATH")
+	private String photoPath;
 
-	@Column(name="COUNTRY")
-	private String  country;
+	@Column(name = "COMPANY_NAME")
+	private String companyName;
 
-	  
-	@Column(name="FLAG_HIRE")
-	private String  flagHire;
+	@Column(name = "COMPANY_LOCATION")
+	private String companyLocation;
 
-	  
-	@Column(name="CRTD_BY")
+	@Column(name = "DOB")
+	private String dob;
+
+	@Column(name = "MOBILE_NUMBER")
+	private String mobileNo;
+
+	@Column(name = "EML")
+	private String email;
+
+	@Column(name = "COUNTRY")
+	private String country;
+
+	@Column(name = "FLAG_HIRE")
+	private String flagHire;
+
+	@Column(name = "CRTD_BY")
 	private String crtd_by;
-	  
-	@Column(name="CRTD_TMSTMP")
+
+	@Column(name = "CRTD_TMSTMP")
 	private Date crtd_tmstmp;
-	
-	@Column(name="MOD_BY")
+
+	@Column(name = "MOD_BY")
 	private String mdfd_by;
-	  
-	@Column(name="MOD_TMSTMP")
+
+	@Column(name = "MOD_TMSTMP")
 	private Date mdfd_tmstmp;
 
-	public int getId() {
+	@Column(name = "STATUS")
+	private boolean status;
+
+	@Column(name = "FIREBASE_ID")
+	private String fireBaseId;
+
+	public BigInteger getId() {
 		return id;
 	}
 
-	public void setId(Integer id) {
+	public void setId(BigInteger id) {
 		this.id = id;
+	}
+
+	public String getFirstName() {
+		return firstName;
+	}
+
+	public void setFirstName(String firstName) {
+		this.firstName = firstName;
+	}
+
+	public String getLastName() {
+		return lastName;
+	}
+
+	public void setLastName(String lastName) {
+		this.lastName = lastName;
 	}
 
 	public String getFullName() {
@@ -110,12 +137,28 @@ public class RecruiterProfileDTO {
 		this.companyLocation = companyLocation;
 	}
 
-	public String getMobileNumber() {
-		return mobileNumber;
+	public String getDob() {
+		return dob;
 	}
 
-	public void setMobileNumber(String mobileNumber) {
-		this.mobileNumber = mobileNumber;
+	public void setDob(String dob) {
+		this.dob = dob;
+	}
+
+	public String getMobileNo() {
+		return mobileNo;
+	}
+
+	public void setMobileNo(String mobileNo) {
+		this.mobileNo = mobileNo;
+	}
+
+	public String getEmail() {
+		return email;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
 	}
 
 	public String getCountry() {
@@ -165,9 +208,13 @@ public class RecruiterProfileDTO {
 	public void setMdfd_tmstmp(Date mdfd_tmstmp) {
 		this.mdfd_tmstmp = mdfd_tmstmp;
 	}
-	
-	  
-	  
 
+	public String getFireBaseId() {
+		return fireBaseId;
+	}
+
+	public void setFireBaseId(String fireBaseId) {
+		this.fireBaseId = fireBaseId;
+	}
 
 }

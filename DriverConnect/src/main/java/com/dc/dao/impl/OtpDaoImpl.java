@@ -1,6 +1,7 @@
 package com.dc.dao.impl;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -18,7 +19,7 @@ import org.springframework.jdbc.support.GeneratedKeyHolder;
 import org.springframework.jdbc.support.KeyHolder;
 import org.springframework.stereotype.Repository;
 
-import com.dc.bean.OTP;
+import com.dc.bean.OTPForm;
 import com.dc.dao.OtpDao;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.OtpService;
@@ -40,7 +41,7 @@ public class OtpDaoImpl implements OtpDao{
 	private  static final Logger Logger = LoggerFactory.getLogger(OtpDaoImpl.class); 
 	
 	@Override
-	public OTP saveOTPdetails(OTP otp) throws DataAccessLayerException {
+	public OTPForm saveOTPdetails(OTPForm otp) throws DataAccessLayerException {
 		
 		KeyHolder key = new GeneratedKeyHolder(); 
 	     final String query = SqlConstants.insert_otp_deatils;
@@ -55,7 +56,7 @@ public class OtpDaoImpl implements OtpDao{
 						ps.setDate(4, null);	
 						ps.setString(5, null);
 						ps.setDate(6,null);
-						ps.setDate(7, CommonUtill.convertToDbInsertDate(otp.getCreatedDate()));
+						ps.setDate(7,new Date(System.currentTimeMillis()));
 						return ps;
 					}
 				},key);
@@ -68,14 +69,14 @@ public class OtpDaoImpl implements OtpDao{
 		
 	}
 	@Override
-	public OTP getOtp(String mobile) throws DataAccessLayerException {
-		OTP otpDetails = null;
+	public OTPForm getOtp(String mobile) throws DataAccessLayerException {
+		OTPForm otpDetails = null;
 		final String query =" SELECT * FROM `dc_otp` WHERE `MOB_NO`=?  order by CRTD_TMSTMP desc Limit 1 ";	
 		try {
-			 otpDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{mobile}, new RowMapper<OTP>(){
+			 otpDetails = jdbcTemplate.queryForObject(query.toString(), new Object[]{mobile}, new RowMapper<OTPForm>(){
 				@Override
-				public OTP mapRow(ResultSet rs, int rowNum) throws SQLException {
-					OTP otp = new OTP();
+				public OTPForm mapRow(ResultSet rs, int rowNum) throws SQLException {
+					OTPForm otp = new OTPForm();
 					otp.setId(rs.getInt("ID"));
 					otp.setPin(String.valueOf(rs.getInt("OTP")));
 					otp.setExpDate(null);
