@@ -133,6 +133,7 @@ public class JobResource {
 		if (null != recId && !recId.equalsIgnoreCase("")) {
 			try {
 				
+				offset = offset*10;  
 				RecruiterProfileForm recruiterProfile=new RecruiterProfileForm();
 				recruiterProfile.setId(BigInteger.valueOf( Integer.valueOf(recId)));
 				jobsList= jobService.fetchJobDetailsForRecruiter(searchProfileForm , offset);
@@ -169,6 +170,7 @@ public class JobResource {
 				UserProfileForm userForm=new UserProfileForm();
 				userForm.setId(CommonUtill.convertTOBigInteger(sub_id));
 				
+				offset = offset*10;
 				searchProfileForm.setUserForm(userForm);
 				jobsList= jobService.fetchJobDetailsForSubscriber(searchProfileForm,offset);
 				if(jobsList.size() < 0) {

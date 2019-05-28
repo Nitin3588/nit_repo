@@ -7,9 +7,9 @@ public class SqlConstants {
 
 public static final int PAGESIZE= 10;	
 
-public	static DateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
+public	static final DateFormat dateFormat = new SimpleDateFormat("dd-MMMM-yyyy");
 
-public	static DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+public	static final DateFormat dateFormat1 = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
 	
 public static final String insert_sub_user= "INSERT INTO `rd_sub_usr`(`USR_NM`,USR_PWD,`F_NM`,`EML`,`MOB_NO`,`CREATED_DATE`,`CREATED_BY`,`ACTIVE`,`CITY_ID`,`PASS_RESET`,`AUTH_PASS_FLAG`,`OTP`, `OTP_CREATED_DATE`) VALUES (?,md5(?),?,?,?,?,?,?,?,NOW(),?,TRUE,?,?,?,?,NOW())" ; 
 

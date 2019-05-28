@@ -17,6 +17,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.dc.bean.BaseResponse;
 import com.dc.bean.OTPForm;
+import com.dc.bean.RecruiterProfileForm;
 import com.dc.bean.UserProfileForm;
 import com.dc.dto.UserProfileDTO;
 import com.dc.exception.DataAccessLayerException;
@@ -82,8 +83,17 @@ public class LoginResource {
 			try {
 				if(Integer.valueOf(userType) == Constants.userRole.ROLE_DRIVER){
 					 user = userService.findUserByMobile(mobile);
+				if ( user instanceof UserProfileForm ) {
+					UserProfileForm  driver  =  (UserProfileForm)user;
+					driver.setUserType(String.valueOf(Constants.userRole.ROLE_DRIVER));
+				}
+					 
 				}else if(Integer.valueOf(userType) == Constants.userRole.ROLE_RECRUITER) {
 					user =  userService.findRecruiterProfile(mobile); 
+					if ( user instanceof UserProfileForm ) {
+						RecruiterProfileForm  rec  =  (RecruiterProfileForm)user;
+						rec.setUserType(String.valueOf(Constants.userRole.ROLE_RECRUITER));
+					}
 				}
 				 if(null!=user) {
 				     response.setStatus(ResponseStatus.SUCESS);

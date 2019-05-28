@@ -3,6 +3,11 @@ package com.dc.bean;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
+import java.util.Set;
+
+import com.dc.dto.Vehicle;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 
 
 public class JobDetailForm implements Serializable{
@@ -42,14 +47,17 @@ public class JobDetailForm implements Serializable{
 	private String email;
 	private String employmentType;
 	private Integer salaryAnnual;
-	private String  vechicleType; 
+	
+	@JsonIgnore
+	private List<String> vechicleTypes;
 	
 	private String companyAddress;
 	private Date   expiryDate;
-
 	
 	private boolean applyStatus =false;
 		
+	private String minSalary;
+	private String maxSalary;
 	
 	public String getJobTitle() {
 		return jobTitle;
@@ -75,7 +83,6 @@ public class JobDetailForm implements Serializable{
 	public void setMaxWorkexp(int maxWorkexp) {
 		this.maxWorkexp = maxWorkexp;
 	}
-
 
 	public String getHiringFlag() {
 		return hiringFlag;
@@ -229,6 +236,12 @@ public class JobDetailForm implements Serializable{
 	public void setSalaryAnnual(Integer salaryAnnual) {
 		this.salaryAnnual = salaryAnnual;
 	}
+	public List<String> getVechicleList() {
+		return vechicleTypes;
+	}
+	public void setVechicleList(List<String> vechicleTypes) {
+		this.vechicleTypes = vechicleTypes;
+	}
 	public Date getExpiryDate() {
 		return expiryDate;
 	}
@@ -240,6 +253,18 @@ public class JobDetailForm implements Serializable{
 	}
 	public void setApplyStatus(boolean applyStatus) {
 		this.applyStatus = applyStatus;
+	}
+	public String getMinSalary() {
+		return minSalary;
+	}
+	public void setMinSalary(String minSalary) {
+		this.minSalary = minSalary;
+	}
+	public String getMaxSalary() {
+		return maxSalary;
+	}
+	public void setMaxSalary(String maxSalary) {
+		this.maxSalary = maxSalary;
 	}
 	
 	

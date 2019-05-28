@@ -162,6 +162,7 @@ public class UserResource {
 					if (null != user) {
 						Logger.info("received data in listActiveDrvprofiles: " + user );
 						try {
+							   offset = offset*10;
 							   drvList = userService.findAllusers(offset);
 							   response.setStatus(ResponseStatus.SUCESS);
 							   response.setCode(ResponseStatus.SUCESS_CODE);
@@ -191,6 +192,7 @@ public class UserResource {
 					if (null != job_id) {
 						Logger.info(" listApplicants call  received job_id: " + job_id );
 						try {
+							   offset = offset*10;
 							   drvList = userService.findApplicantForJob(job_id ,offset);
 							   response.setStatus(ResponseStatus.SUCESS);
 							   response.setCode(ResponseStatus.SUCESS_CODE);

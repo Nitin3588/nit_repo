@@ -10,7 +10,9 @@ import org.hibernate.Criteria;
 import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Expression;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.persister.collection.CollectionPropertyNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -20,9 +22,7 @@ import org.springframework.stereotype.Repository;
 
 import com.dc.bean.JobApplyForm;
 import com.dc.bean.JobDetailForm;
-import com.dc.bean.RecruiterProfileForm;
 import com.dc.bean.SearchProfileForm;
-import com.dc.bean.UserProfileForm;
 import com.dc.dao.JobDao;
 import com.dc.dto.JobApplyDTO;
 import com.dc.dto.JobDetailDTO;
@@ -30,10 +30,8 @@ import com.dc.exception.DataAccessLayerException;
 import com.dc.utill.CommonUtill;
 import com.dc.utill.SqlConstants;
 
-import ch.qos.logback.core.joran.util.beans.BeanUtil;
-
 @Repository
-public class JobDaoImpl implements JobDao {
+public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 	
 	@Autowired
 	@Qualifier("hibernateSessionFactory")
@@ -67,30 +65,29 @@ public class JobDaoImpl implements JobDao {
 			throws DataAccessLayerException{
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(JobDetailDTO.class);
-		cr.add(Restrictions.eq("recId", searchProfileForm.getRecId()));
+		cr.add(Restrictions.eq("recId",convertTOBigInteger(searchProfileForm.getRecId())));
 		
-		 
 		 if(searchProfileForm.getFromDate() != null &&  "" !=searchProfileForm.getFromDate()) {
 			 cr.add(Restrictions.eq("crtdDate",searchProfileForm.getFromDate()));
-			 
 		 }
 		 if(searchProfileForm.getToDate() != null && "" != searchProfileForm.getToDate()) {
 			 cr.add(Restrictions.eq("crtdDate",searchProfileForm.getToDate()));
-			 
 		 }
-		 
 		 if(null !=searchProfileForm.getEmploymentType() &&  ""!=searchProfileForm.getEmploymentType()) {
 			 cr.add(Restrictions.eq("employmentType", searchProfileForm.getEmploymentType()));
-			 
 		 }
-		 
-		 if(null  != searchProfileForm.getVechicleType() &&  ""!= searchProfileForm.getVechicleType() ) {
-			 cr.add(Restrictions.in("vechicleType",searchProfileForm.getVechicleList()));
-			 
+		 if( null !=  searchProfileForm.getCityList()    &&  !searchProfileForm.getCityList().isEmpty() ) {
+			 cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
+		 }
+		 if(null  != searchProfileForm.getVechicleList() &&  !searchProfileForm.getVechicleList().isEmpty() ) {
+			   //cr.add(Restrictions.in("vechicleTypes", searchProfileForm.getVechicleList()));
+			cr.createAlias( "vechicleTypes", "vechicleTypes" );
+			cr.add(Expression.in("vechicleTypes.elements",searchProfileForm.getVechicleList()));
 		 }
 		 
 		cr.setFirstResult(offset);
 		cr.setMaxResults(SqlConstants.PAGESIZE);
+		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 		List<JobDetailForm> jobPostingForm =(List<JobDetailForm>) cr.list();
 		return jobPostingForm;
 		
@@ -109,44 +106,47 @@ public class JobDaoImpl implements JobDao {
 		 for(JobDetailDTO job: appliedJobList) {
 			 appliedJobMap.put(job.getId(), job);
 		 }
-		 
 		 Criteria cr = session.createCriteria(JobDetailDTO.class);
 		
 		 if(null != searchProfileForm.getRecId() &&  "" != searchProfileForm.getRecId()) {
 			 cr.add(Restrictions.eq("recId",CommonUtill.convertTOBigInteger(searchProfileForm.getRecId())));
-			 
 		 }
-		 if(searchProfileForm.getCityId() != 0 ) {
+		 if( null !=  searchProfileForm.getCityList()    &&  !searchProfileForm.getCityList().isEmpty() ) {
 			 cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
-			 
 		 }
 		 if(searchProfileForm.getFromDate() != null &&  "" !=searchProfileForm.getFromDate()) {
 			 cr.add(Restrictions.eq("crtdDate",searchProfileForm.getFromDate()));
-			 
 		 }
 		 if(searchProfileForm.getToDate() != null && "" != searchProfileForm.getToDate()) {
 			 cr.add(Restrictions.eq("crtdDate",searchProfileForm.getToDate()));
-			 
 		 }
-		 
 		 if(null !=searchProfileForm.getEmploymentType() &&  ""!=searchProfileForm.getEmploymentType()) {
 			 cr.add(Restrictions.eq("employmentType", searchProfileForm.getEmploymentType()));
-			 
 		 }
-		 
-		 if(null  != searchProfileForm.getVechicleType() &&  ""!= searchProfileForm.getVechicleType() ) {
-			 cr.add(Restrictions.in("vechicleType",searchProfileForm.getVechicleList()));
-			 
+		 if(null  != searchProfileForm.getVechicleList() &&  !searchProfileForm.getVechicleList().isEmpty() ) {
+			   //cr.add(Restrictions.in("vechicleTypes", searchProfileForm.getVechicleList()));
+			cr.createAlias( "vechicleTypes", "vechicleTypes" );
+			cr.add(Expression.in("vechicleTypes.elements",searchProfileForm.getVechicleList()));
 		 }
 		 
 		 if(searchProfileForm.getSalaryAnnual() != null) {
-			 cr.add(Restrictions.eq("salaryAnnual",searchProfileForm.getSalaryAnnual()));
-			 
+			 cr.add(Restrictions.between("salaryAnnual",searchProfileForm.getMinSalary(), searchProfileForm.getMaxSalary()));
 		 }
-		 
+
+		/* if(searchProfileForm.getMinSalary() != null) {
+			 cr.add(Restrictions.ge("minSalary",searchProfileForm.getMinSalary()));
+		 }
+		 if(searchProfileForm.getMaxSalary() != null) {
+			 cr.add(Restrictions.le("maxSalary",searchProfileForm.getMaxSalary()));
+		 }*/
 		 
 		 cr.setFirstResult(offset);
 		 cr.setMaxResults(SqlConstants.PAGESIZE);
+		 System.out.println("CR detail {}" + cr.toString());
+		 
+		 
+		 cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
+
 		 List<JobDetailDTO> availablejobsList =(List<JobDetailDTO>) cr.list();
 		 List<JobDetailForm> resultList = new ArrayList<JobDetailForm>(); 
 		 
@@ -215,9 +215,10 @@ public class JobDaoImpl implements JobDao {
 
 	@Override
 	public JobDetailForm getJobDetail(String jobId) throws DataAccessLayerException {
-		Session session=sessionFactory.getCurrentSession();
+		Session session=sessionFactory.openSession();
 		JobDetailForm  job = null ;
-		Criteria cr = session.createCriteria(JobDetailDTO.class);
+	
+	Criteria cr = session.createCriteria(JobDetailDTO.class);
 		cr.add(Restrictions.eq("jobId", jobId));
 		cr.add(Restrictions.eq("status",true ));
 		JobDetailDTO jobDTO= (JobDetailDTO) cr.uniqueResult();

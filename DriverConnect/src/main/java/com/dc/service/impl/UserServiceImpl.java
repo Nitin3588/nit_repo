@@ -56,7 +56,10 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public UserProfileForm findUserByMobile(String mobile) throws DataAccessLayerException {
-		return  userDao.findUserByMobile(mobile);
+		
+		UserProfileForm user  = null;
+		user = userDao.findUserByMobile(mobile); 
+		return  user ;
 	}
 	
 	

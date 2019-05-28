@@ -6,18 +6,18 @@ public class SearchProfileForm {
 
 	private  String sub_id;
 	private String recId;
-	private int cityId;
 	private int expReq;
 	private String fromDate;
 	private String toDate;
 	
 	private  String employmentType;
 	private Integer salaryAnnual;
-	private String  vechicleType; 
-	
+
 	private List<Integer> cityList;
 	private List<String> vechicleList;
-	
+	private String minSalary;
+	private String maxSalary;
+
 	
 	UserProfileForm userForm=new UserProfileForm();
 
@@ -46,12 +46,7 @@ public class SearchProfileForm {
 	public void setRecId(String recId) {
 		this.recId = recId;
 	}
-	public int getCityId() {
-		return cityId;
-	}
-	public void setCityId(int cityId) {
-		this.cityId = cityId;
-	}
+	
 	public int getExpReq() {
 		return expReq;
 	}
@@ -76,12 +71,6 @@ public class SearchProfileForm {
 	public void setSalaryAnnual(Integer salaryAnnual) {
 		this.salaryAnnual = salaryAnnual;
 	}
-	public String getVechicleType() {
-		return vechicleType;
-	}
-	public void setVechicleType(String vechicleType) {
-		this.vechicleType = vechicleType;
-	}
 	public List<Integer> getCityList() {
 		return cityList;
 	}
@@ -93,6 +82,18 @@ public class SearchProfileForm {
 	}
 	public void setVechicleList(List<String> vechicleList) {
 		this.vechicleList = vechicleList;
+	}
+	public String getMinSalary() {
+		return minSalary;
+	}
+	public void setMinSalary(String minSalary) {
+		this.minSalary = minSalary;
+	}
+	public String getMaxSalary() {
+		return maxSalary;
+	}
+	public void setMaxSalary(String maxSalary) {
+		this.maxSalary = maxSalary;
 	}
 	
 	

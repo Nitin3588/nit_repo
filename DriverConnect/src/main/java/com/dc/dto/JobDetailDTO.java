@@ -1,21 +1,32 @@
 package com.dc.dto;
 
+import java.io.Serializable;
 import java.math.BigInteger;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CollectionTable;
 import javax.persistence.Column;
+import javax.persistence.ElementCollection;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.Table;
-import javax.persistence.Transient;
 
 @Entity
 @Table(name="dc_job")
-public class JobDetailDTO {
+public class JobDetailDTO  implements Serializable {
 
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 2900978345767582043L;
+
 	@Id
 	@Column(name="ID")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)
@@ -91,11 +102,27 @@ public class JobDetailDTO {
 	@Column(name="EMP_TYPE")
 	private String employmentType;
 	
-	@Column(name="VECHICLE_TYPE")
-	private String  vechicleType; 
 	
 	@Column(name="SALARY_ANNUAL")
 	private Integer salaryAnnual;
+	
+	
+	
+	@ElementCollection(fetch=FetchType.EAGER)
+	@CollectionTable(name = "dc_vehicle_list",joinColumns = @JoinColumn(name = "JOB_ID"))
+    @Column(name = "VECHICLE_TYPE")
+    private List<String> vechicleTypes ;
+
+    
+   // @Column(name = "VECHICLE_TYPE")
+    //private String vechicleTypes ;
+	
+	@Column(name="MINSALARY")
+	private String minSalary;
+	
+	@Column(name="MAXSALARY")
+	private String maxSalary;
+	
 	
 	
 	public BigInteger getId() {
@@ -293,13 +320,7 @@ public class JobDetailDTO {
 		this.employmentType = employmentType;
 	}
 
-	public String getVechicleType() {
-		return vechicleType;
-	}
-
-	public void setVechicleType(String vechicleType) {
-		this.vechicleType = vechicleType;
-	}
+	
 
 	public Integer getSalaryAnnual() {
 		return salaryAnnual;
@@ -307,6 +328,30 @@ public class JobDetailDTO {
 
 	public void setSalaryAnnual(Integer salaryAnnual) {
 		this.salaryAnnual = salaryAnnual;
+	}
+
+	public List<String> getVechicleList() {
+		return vechicleTypes;
+	}
+
+	public void setVechicleList(List<String> vechicleTypes) {
+		this.vechicleTypes = vechicleTypes;
+	}
+
+	public String getMinSalary() {
+		return minSalary;
+	}
+
+	public void setMinSalary(String minSalary) {
+		this.minSalary = minSalary;
+	}
+
+	public String getMaxSalary() {
+		return maxSalary;
+	}
+
+	public void setMaxSalary(String maxSalary) {
+		this.maxSalary = maxSalary;
 	}
 
 	
