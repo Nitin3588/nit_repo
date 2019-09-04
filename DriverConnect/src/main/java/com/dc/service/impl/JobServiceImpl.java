@@ -16,6 +16,7 @@ import com.dc.bean.UserProfileForm;
 import com.dc.dao.JobDao;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.JobService;
+import com.dc.utill.Constants;
 
 @Service("JobService")
 @Transactional
@@ -62,8 +63,8 @@ public class JobServiceImpl implements JobService {
 	}
 
 	@Override
-	public JobDetailForm getJobDetail(String jobId) throws DataAccessLayerException {
-		return jobDao.getJobDetail(jobId);
+	public JobDetailForm getJobDetail(String jobId ,String userType ,String userId) throws DataAccessLayerException {
+		return jobDao.getJobDetail(jobId ,userType, userId);
 	}
 	
 }

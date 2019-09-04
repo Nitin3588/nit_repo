@@ -9,10 +9,6 @@ import java.net.URL;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.twilio.Twilio;
-import com.twilio.rest.api.v2010.account.Message;
-import com.twilio.type.PhoneNumber;
-
 public class Sender {
 
 	private  static final Logger Logger = LoggerFactory.getLogger(Sender.class); 

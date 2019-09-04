@@ -29,7 +29,7 @@ public interface UserDao {
 	
 	public RecruiterProfileForm findRecruiterProfile(String mobile) throws DataAccessLayerException;
 	
-	public RecruiterProfileDTO findRecruiterById(BigInteger Id) throws DataAccessLayerException ;
+	public RecruiterProfileForm findRecruiterById(BigInteger Id) throws DataAccessLayerException ;
 	
 	public boolean findRecruiterProfileAlreadyExistOrNot(RecruiterProfileForm recruiter) throws DataAccessLayerException;
 	

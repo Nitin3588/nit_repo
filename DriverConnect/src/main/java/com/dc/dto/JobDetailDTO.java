@@ -2,7 +2,6 @@ package com.dc.dto;
 
 import java.io.Serializable;
 import java.math.BigInteger;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -16,6 +15,12 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
+import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 @Table(name="dc_job")
@@ -59,13 +64,14 @@ public class JobDetailDTO  implements Serializable {
 	@Column(name="MAX_EXP")
 	  private int maxWorkexp;
 
-	@Column(name="CITY_ID")
-	  private int cityId;
+	/*@Column(name="CITY_ID")
+	  private int cityId;*/
 
 	@Column(name="RECRUITER_ID")
 	  private BigInteger recId;
 
-	@Column(name="CREATED_DATE")
+	@Temporal(TemporalType.DATE)
+	@Column(name="CREATED_DATE" ,insertable=false)
 	  private Date crtdDate;
 
 	@Column(name="UPDATED_BY")
@@ -74,7 +80,9 @@ public class JobDetailDTO  implements Serializable {
 	@Column(name="CREATED_BY")
 	  private int crtBy;
 
-	@Column(name="LST_UPD_TS")
+	
+	@Temporal(TemporalType.DATE)
+	@Column(name="LST_UPD_TS" ,insertable=false)
 	  private Date lstUpdStatus;
 
 	@Column(name="STATUS")
@@ -107,11 +115,15 @@ public class JobDetailDTO  implements Serializable {
 	private Integer salaryAnnual;
 	
 	
-	
 	@ElementCollection(fetch=FetchType.EAGER)
 	@CollectionTable(name = "dc_vehicle_list",joinColumns = @JoinColumn(name = "JOB_ID"))
-    @Column(name = "VECHICLE_TYPE")
+    //@Column(name = "VECHICLE_TYPE")
     private List<String> vechicleTypes ;
+	
+	@ElementCollection
+    @LazyCollection(LazyCollectionOption.FALSE)
+	@CollectionTable(name = "dc_city_list",joinColumns = @JoinColumn(name = "JOB_ID"))
+    private List<String> cityList;
 
     
    // @Column(name = "VECHICLE_TYPE")
@@ -208,13 +220,13 @@ public class JobDetailDTO  implements Serializable {
 	}
 
 
-	public int getCityId() {
+	/*public int getCityId() {
 		return cityId;
 	}
 
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
-	}
+	}*/
 
 	public BigInteger getRecId() {
 		return recId;
@@ -338,6 +350,14 @@ public class JobDetailDTO  implements Serializable {
 		this.vechicleTypes = vechicleTypes;
 	}
 
+	public List<String> getCityList() {
+		return cityList;
+	}
+
+	public void setCityList(List<String> cityList) {
+		this.cityList = cityList;
+	}
+
 	public String getMinSalary() {
 		return minSalary;
 	}
@@ -352,6 +372,47 @@ public class JobDetailDTO  implements Serializable {
 
 	public void setMaxSalary(String maxSalary) {
 		this.maxSalary = maxSalary;
+	}
+
+	public JobDetailDTO(BigInteger id, String jobId, int categoryId, String companyName, String jobTitle,
+			String description, String workLocation, String expReq, int minWorkexp, int maxWorkexp, BigInteger recId,
+			Date crtdDate, int updBy, int crtBy, Date lstUpdStatus, boolean status, boolean publish, boolean isNew,
+			boolean appByAdmin, String rejComByAdmin, String contact, String email, String employmentType,
+			Integer salaryAnnual, List<String> vechicleTypes, List<String> cityList, String minSalary,
+			String maxSalary) {
+		super();
+		this.id = id;
+		this.jobId = jobId;
+		this.categoryId = categoryId;
+		this.companyName = companyName;
+		this.jobTitle = jobTitle;
+		this.description = description;
+		this.workLocation = workLocation;
+		this.expReq = expReq;
+		this.minWorkexp = minWorkexp;
+		this.maxWorkexp = maxWorkexp;
+		this.recId = recId;
+		this.crtdDate = crtdDate;
+		this.updBy = updBy;
+		this.crtBy = crtBy;
+		this.lstUpdStatus = lstUpdStatus;
+		this.status = status;
+		this.publish = publish;
+		this.isNew = isNew;
+		this.appByAdmin = appByAdmin;
+		this.rejComByAdmin = rejComByAdmin;
+		this.contact = contact;
+		this.email = email;
+		this.employmentType = employmentType;
+		this.salaryAnnual = salaryAnnual;
+		this.vechicleTypes = vechicleTypes;
+		this.cityList = cityList;
+		this.minSalary = minSalary;
+		this.maxSalary = maxSalary;
+	}
+
+	public JobDetailDTO() {
+		super();
 	}
 
 	

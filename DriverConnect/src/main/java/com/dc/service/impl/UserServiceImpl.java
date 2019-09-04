@@ -64,12 +64,10 @@ public class UserServiceImpl implements UserService {
 	
 	
 	@Override
-	@Transactional
-	public RecruiterProfileForm saveRecruiterProfile(RecruiterProfileForm recruiterProfile) 
-			throws DataAccessLayerException, ApplicationException{
+	public RecruiterProfileForm saveRecruiterProfile(RecruiterProfileForm recruiterProfile) throws DataAccessLayerException, ApplicationException{
 		 Logger.info("in saveRecruiterProfile");
 		 CompanyProfileForm  company =  companyDao.saveCompanyDetails(recruiterProfile.getCompanyProfileForm());
-		 recruiterProfile.setCompanyProfileForm(company);
+		 recruiterProfile.setCompanyId(company.getId());
 		 recruiterProfile  = userDao.saveRecruiterProfile(recruiterProfile);
 		 return recruiterProfile;
 	}
@@ -81,12 +79,20 @@ public class UserServiceImpl implements UserService {
 
 	@Override
 	public RecruiterProfileForm findRecruiterProfile(String mobile) throws DataAccessLayerException {
-		 return userDao.findRecruiterProfile(mobile);
+		
+		RecruiterProfileForm  rec = userDao.findRecruiterProfile(mobile);
+		return rec;
+				
 	}
 	
 	@Override
-	public RecruiterProfileDTO findRecruiterById(BigInteger Id) throws DataAccessLayerException {
-		return userDao.findRecruiterById(Id);
+	public RecruiterProfileForm findRecruiterById(BigInteger Id) throws DataAccessLayerException ,ApplicationException{
+		
+		RecruiterProfileForm  rec =null;
+		rec = userDao.findRecruiterById(Id);
+		CompanyProfileForm company = companyDao.fetchCompanyDetails(rec.getCompanyId());
+		rec.setCompanyProfileForm(company);
+		return rec;
 	}
 	
 	

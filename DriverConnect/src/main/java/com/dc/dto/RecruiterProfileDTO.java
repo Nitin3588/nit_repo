@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "dc_recruiter_details")
@@ -34,6 +36,9 @@ public class RecruiterProfileDTO {
 	@Column(name = "PHOTO_PATH")
 	private String photoPath;
 
+	@Column(name = "COMPANY_ID")
+	private BigInteger companyId;
+	
 	@Column(name = "COMPANY_NAME")
 	private String companyName;
 
@@ -58,13 +63,15 @@ public class RecruiterProfileDTO {
 	@Column(name = "CRTD_BY")
 	private String crtd_by;
 
-	@Column(name = "CRTD_TMSTMP")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "CRTD_TMSTMP",insertable=false)
 	private Date crtd_tmstmp;
 
 	@Column(name = "MOD_BY")
 	private String mdfd_by;
 
-	@Column(name = "MOD_TMSTMP")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "MOD_TMSTMP",insertable=false)
 	private Date mdfd_tmstmp;
 
 	@Column(name = "STATUS")
@@ -119,6 +126,14 @@ public class RecruiterProfileDTO {
 
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
+	}
+
+	public BigInteger getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(BigInteger companyId) {
+		this.companyId = companyId;
 	}
 
 	public String getCompanyName() {

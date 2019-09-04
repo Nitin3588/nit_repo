@@ -27,7 +27,7 @@ public interface JobService {
 	
 	public boolean updateJobStatus(String jobId,String recId,boolean status) throws DataAccessLayerException;
 	
-	public JobDetailForm getJobDetail(String jobId) throws DataAccessLayerException;
+	public JobDetailForm getJobDetail(String jobId ,String userType,String subscriberId) throws DataAccessLayerException;
 	
 
 }

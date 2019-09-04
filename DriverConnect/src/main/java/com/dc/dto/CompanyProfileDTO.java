@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 
 @Entity
@@ -45,13 +47,15 @@ public class CompanyProfileDTO {
 	@Column(name="CRTD_BY")
 	private String crtd_by;
 	  
-	@Column(name="CRTD_TMSTMP")
+	@Temporal(TemporalType.DATE)
+	@Column(name="CRTD_TMSTMP" ,insertable=false)
 	private Date createdDate;
 	
 	@Column(name="MOD_BY")
 	private String mdfd_by;
 	  
-	@Column(name="MOD_TMSTMP")
+	@Temporal(TemporalType.DATE)
+	@Column(name="MOD_TMSTMP",insertable=false)
 	private Date mdfdDate;
 	
 	@Column(name="STATUS")

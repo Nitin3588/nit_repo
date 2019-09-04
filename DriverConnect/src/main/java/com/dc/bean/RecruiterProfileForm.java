@@ -17,6 +17,7 @@ public class RecruiterProfileForm implements Serializable {
 	private String 	fullName;
 	private String  photoName;
 	private String  photoPath;
+	private BigInteger  companyId;
 	private String  companyName;
 	private String  companyLocation;
 	private String  mobileNo;
@@ -102,6 +103,12 @@ public class RecruiterProfileForm implements Serializable {
 	}
 	public void setPhotoPath(String photoPath) {
 		this.photoPath = photoPath;
+	}
+	public BigInteger getCompanyId() {
+		return companyId;
+	}
+	public void setCompanyId(BigInteger companyId) {
+		this.companyId = companyId;
 	}
 	public String getCompanyName() {
 		return companyName;

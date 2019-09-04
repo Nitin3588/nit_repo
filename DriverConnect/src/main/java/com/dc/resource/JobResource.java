@@ -91,7 +91,8 @@ public class JobResource {
 
 	
 	@RequestMapping(value = "/getJobDetail", method = RequestMethod.POST)
-	public ResponseEntity<BaseResponse> getJobDetail(@RequestParam(value = "jobId") String jobId)
+	public ResponseEntity<BaseResponse> getJobDetail(@RequestParam(value = "jobId") String jobId ,@RequestParam(value = "userType") String userType,
+			@RequestParam(value = "userId") String userId)
 	{
 		JobDetailForm job=null;
 		BaseResponse response = new BaseResponse();
@@ -99,7 +100,7 @@ public class JobResource {
 			try {
 				//RecruiterProfileForm recruiterProfile=new RecruiterProfileForm();
 				//recruiterProfile.setId(BigInteger.valueOf( Integer.valueOf(recId)));
-				job = jobService.getJobDetail(jobId);
+				job = jobService.getJobDetail(jobId ,userType ,userId);
 				if(null != job ) {
 					response.setObj(job);	
 					response.setStatus(ResponseStatus.SUCESS);
@@ -125,15 +126,14 @@ public class JobResource {
 
 	//fetches jobs list for recruiter 
 	@RequestMapping(value = "/fetchJobDetail", method = RequestMethod.POST)
-	public ResponseEntity<List<JobDetailForm>> fetchJobDetail(@RequestBody SearchProfileForm searchProfileForm, @RequestParam(value = "offset") int offset)
+	public ResponseEntity<List<JobDetailForm>> fetchJobDetailForRecruiter (@RequestBody SearchProfileForm searchProfileForm, @RequestParam(value = "offset") int offset)
 	{
 		List<JobDetailForm> jobsList=null;
 		String recId =  searchProfileForm.getRecId();
 		BaseResponse response = new BaseResponse();
 		if (null != recId && !recId.equalsIgnoreCase("")) {
-			try {
-				
-				offset = offset*10;  
+		try {
+				offset = offset*10;
 				RecruiterProfileForm recruiterProfile=new RecruiterProfileForm();
 				recruiterProfile.setId(BigInteger.valueOf( Integer.valueOf(recId)));
 				jobsList= jobService.fetchJobDetailsForRecruiter(searchProfileForm , offset);
@@ -158,7 +158,7 @@ public class JobResource {
 	}
 
 
-	//fetches jobs list for recruiter 
+	//fetches jobs list for Subscriber 
 	@RequestMapping(value = "/fetchJobDetailsForSubscriber", method = RequestMethod.POST)
 	public ResponseEntity<List<JobDetailForm>> fetchJobDetailsForSubscriber(@RequestBody SearchProfileForm searchProfileForm, @RequestParam(value = "offset") int offset)
 	{

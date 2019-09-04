@@ -1,5 +1,6 @@
 package com.dc.resource;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -13,10 +14,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.dc.bean.BaseResponse;
 import com.dc.bean.RecruiterProfileForm;
 import com.dc.bean.UserProfileForm;
+import com.dc.dto.UserProfileDTO;
 import com.dc.exception.ApplicationException;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.service.CompanyService;
@@ -80,7 +83,7 @@ public class UserResource {
 				   response.setCode(ResponseStatus.SUCESS_CODE);
 				   response.setObj(user);
 				   
-			} catch (DataAccessLayerException e) {
+			} catch (DataAccessLayerException | ApplicationException  e) {
 				Logger.error(e.getCause().toString());
 				response.setStatus(ResponseStatus.REGISTERATION_ALREADY);
 				response.setCode(ResponseStatus.REGISTERED_ALREADY_CODE);
@@ -210,5 +213,58 @@ public class UserResource {
 					return new ResponseEntity<List<UserProfileForm>>(drvList,HttpStatus.OK);
 					
 				}
+				
+				
+				@RequestMapping(value = "/getUserDetails", method = RequestMethod.GET)
+				public ResponseEntity<BaseResponse> getUserDetails(@RequestParam(value = "userId") int userId) {
+				Object  user=null;
+				BaseResponse response = new BaseResponse();	
+					
+				Logger.info("GET :in userDetails request  {}: ",userId);	
+					try {
+						 user= userService.findUserById(BigInteger.valueOf(Long.valueOf(userId)));
+						 if(null!=user) {
+						     response.setStatus(ResponseStatus.SUCESS);
+							 response.setCode(ResponseStatus.SUCESS_CODE);
+							 response.setObj(user);
+						 }
+						 else {
+							    response.setStatus(ResponseStatus.NOT_FOUND);
+						    	response.setCode(ResponseStatus.NOT_FOUND_CODE);
+						 }
+						 
+				} catch (DataAccessLayerException e) {
+						response.setStatus(ResponseStatus.EXCEPTION_CODE);
+						response.setCode(ResponseStatus.EXCEPTION_OCCURED);
+					}
+					return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+				}	
+				
+				
+				@RequestMapping(value = "/getRecrDetails", method = RequestMethod.GET)
+				public ResponseEntity<BaseResponse> getRecrDetails(@RequestParam(value = "userId") int userId) {
+				Object  user=null;
+				BaseResponse response = new BaseResponse();	
+					
+				Logger.info("GET :in userDetails request  {}: ",userId);	
+					try {
+						 user= userService.findRecruiterById(BigInteger.valueOf(Long.valueOf(userId)));
+						 if(null!=user) {
+						     response.setStatus(ResponseStatus.SUCESS);
+							 response.setCode(ResponseStatus.SUCESS_CODE);
+							 response.setObj(user);
+						 }
+					} catch (DataAccessLayerException  | ApplicationException e ) {
+						if(e.getMessage().equals(ResponseStatus.NOT_FOUND)){
+							 response.setStatus(ResponseStatus.NOT_FOUND);
+						     response.setCode(ResponseStatus.NOT_FOUND_CODE);
+						     return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+						}
+						response.setStatus(ResponseStatus.EXCEPTION_CODE);
+						response.setCode(ResponseStatus.EXCEPTION_OCCURED);
+					}
+					return new ResponseEntity<BaseResponse>(response,HttpStatus.OK);
+				}	
+				
 	
 }

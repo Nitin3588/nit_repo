@@ -2,7 +2,7 @@ package com.dc.dao.impl;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -11,8 +11,8 @@ import org.hibernate.SQLQuery;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Expression;
+import org.hibernate.criterion.Order;
 import org.hibernate.criterion.Restrictions;
-import org.hibernate.persister.collection.CollectionPropertyNames;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.BeanUtils;
@@ -28,6 +28,7 @@ import com.dc.dto.JobApplyDTO;
 import com.dc.dto.JobDetailDTO;
 import com.dc.exception.DataAccessLayerException;
 import com.dc.utill.CommonUtill;
+import com.dc.utill.Constants;
 import com.dc.utill.SqlConstants;
 
 @Repository
@@ -77,14 +78,19 @@ public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 			 cr.add(Restrictions.eq("employmentType", searchProfileForm.getEmploymentType()));
 		 }
 		 if( null !=  searchProfileForm.getCityList()    &&  !searchProfileForm.getCityList().isEmpty() ) {
-			 cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
+				// cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
+				 cr.createAlias( "cityList", "cityList" );
+	             cr.add(Expression.in("cityList.elements",searchProfileForm.getCityList()));
+				 
 		 }
 		 if(null  != searchProfileForm.getVechicleList() &&  !searchProfileForm.getVechicleList().isEmpty() ) {
 			   //cr.add(Restrictions.in("vechicleTypes", searchProfileForm.getVechicleList()));
 			cr.createAlias( "vechicleTypes", "vechicleTypes" );
 			cr.add(Expression.in("vechicleTypes.elements",searchProfileForm.getVechicleList()));
 		 }
-		 
+		
+		cr.addOrder(Order.desc("id"));
+		cr.addOrder(Order.desc("crtdDate")); 
 		cr.setFirstResult(offset);
 		cr.setMaxResults(SqlConstants.PAGESIZE);
 		cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
@@ -101,18 +107,22 @@ public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 		 query.addEntity(JobDetailDTO.class);
 		 
 		 List <JobDetailDTO> appliedJobList  = (List<JobDetailDTO>) query.list();
-		 Map <BigInteger,JobDetailDTO> appliedJobMap = new HashMap<BigInteger ,JobDetailDTO>(); 
+		 Map <BigInteger,JobDetailDTO> appliedJobMap = new LinkedHashMap <BigInteger ,JobDetailDTO>(); 
 		 if(appliedJobList.size() != 0)
 		 for(JobDetailDTO job: appliedJobList) {
 			 appliedJobMap.put(job.getId(), job);
 		 }
+		 
 		 Criteria cr = session.createCriteria(JobDetailDTO.class);
 		
 		 if(null != searchProfileForm.getRecId() &&  "" != searchProfileForm.getRecId()) {
 			 cr.add(Restrictions.eq("recId",CommonUtill.convertTOBigInteger(searchProfileForm.getRecId())));
 		 }
 		 if( null !=  searchProfileForm.getCityList()    &&  !searchProfileForm.getCityList().isEmpty() ) {
-			 cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
+			// cr.add(Restrictions.in("cityId",searchProfileForm.getCityList()));
+			 cr.createAlias( "cityList", "cityList" );
+             cr.add(Expression.in("cityList.elements",searchProfileForm.getCityList()));
+			 
 		 }
 		 if(searchProfileForm.getFromDate() != null &&  "" !=searchProfileForm.getFromDate()) {
 			 cr.add(Restrictions.eq("crtdDate",searchProfileForm.getFromDate()));
@@ -132,7 +142,11 @@ public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 		 if(searchProfileForm.getSalaryAnnual() != null) {
 			 cr.add(Restrictions.between("salaryAnnual",searchProfileForm.getMinSalary(), searchProfileForm.getMaxSalary()));
 		 }
-
+		 
+		 cr.add(Restrictions.eq("status",true ));
+		 cr.addOrder(Order.desc("id"));
+		 cr.addOrder(Order.desc("crtdDate"));
+		 
 		/* if(searchProfileForm.getMinSalary() != null) {
 			 cr.add(Restrictions.ge("minSalary",searchProfileForm.getMinSalary()));
 		 }
@@ -143,7 +157,6 @@ public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 		 cr.setFirstResult(offset);
 		 cr.setMaxResults(SqlConstants.PAGESIZE);
 		 System.out.println("CR detail {}" + cr.toString());
-		 
 		 
 		 cr.setResultTransformer(Criteria.DISTINCT_ROOT_ENTITY);
 
@@ -214,21 +227,47 @@ public class JobDaoImpl  extends CommonUtill  implements JobDao  {
 	}
 
 	@Override
-	public JobDetailForm getJobDetail(String jobId) throws DataAccessLayerException {
+	public JobDetailForm getJobDetail(String jobId ,String userType,String subscriberId) throws DataAccessLayerException {
 		Session session=sessionFactory.openSession();
 		JobDetailForm  job = null ;
 	
 	Criteria cr = session.createCriteria(JobDetailDTO.class);
 		cr.add(Restrictions.eq("jobId", jobId));
-		cr.add(Restrictions.eq("status",true ));
+		if(Integer.valueOf(userType).equals(Constants.userRole.ROLE_DRIVER)) {
+			cr.add(Restrictions.eq("status",true ));
+			JobDetailDTO jobDTO= (JobDetailDTO) cr.uniqueResult();
+			if(null != jobDTO) {
+				 job =new JobDetailForm();
+				 BeanUtils.copyProperties(jobDTO, job);
+				 job.setStatus(getappliedJobStatus(jobId, subscriberId));
+			}
+			
+		}else {
 		JobDetailDTO jobDTO= (JobDetailDTO) cr.uniqueResult();
 		if(null != jobDTO) {
-			 job =new JobDetailForm();
-			 BeanUtils.copyProperties(jobDTO, job);
+					job =new JobDetailForm();
+					 BeanUtils.copyProperties(jobDTO, job);
 		}
-		
+	}
 		return job;
 	}
+	
+	
+	public boolean getappliedJobStatus(String jobId ,String subscriberId) throws DataAccessLayerException {
+		Session session=sessionFactory.openSession();
+		boolean  status = false ;
+		Criteria cr = session.createCriteria(JobApplyDTO.class);
+		cr.add(Restrictions.eq("jobId", jobId));
+		cr.add(Restrictions.eq("id", CommonUtill.convertTOBigInteger(subscriberId)));
+			
+		JobApplyDTO jobApplyDTO= (JobApplyDTO) cr.uniqueResult();
+		if(null != jobApplyDTO) {
+			status = true;
+		}
+		return status;
+	}
+	
+	
 	
 	
 

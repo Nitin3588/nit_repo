@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 @Table(name = "dc_sub_usr")
@@ -76,13 +78,15 @@ public class UserProfileDTO {
 	@Column(name = "CREATED_BY")
 	private int createdBy;
 
-	@Column(name = "CREATED_DATE")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "CREATED_DATE",insertable=false)
 	private Date createdDate;
 
 	@Column(name = "UPDATED_BY")
 	private int mdfdBy;
 
-	@Column(name = "MOD_TMSTMP")
+	@Temporal(TemporalType.DATE)
+	@Column(name = "MOD_TMSTMP",insertable=false)
 	private Date mdfdDate;
 
 	@Column(name = "STATUS")

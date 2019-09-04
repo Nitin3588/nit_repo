@@ -3,7 +3,6 @@ package com.dc.resource;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
-import java.math.BigInteger;
 
 import org.apache.commons.io.IOUtils;
 import org.slf4j.Logger;
@@ -24,12 +23,10 @@ import org.springframework.web.multipart.MultipartFile;
 import com.dc.bean.FileInfo;
 import com.dc.bean.RecruiterProfileForm;
 import com.dc.bean.UserProfileForm;
-import com.dc.dto.RecruiterProfileDTO;
 import com.dc.dto.UserProfileDTO;
 import com.dc.service.UserService;
 import com.dc.utill.CommonUtill;
 import com.dc.utill.Constants;
-import com.twilio.rest.chat.v1.service.User;
 
 @RestController
 @RequestMapping("/fileUploadResource")
@@ -65,7 +62,7 @@ public class FileUploadResource {
 				response.setPhotoPath("Issue with photo size");
 			}
 			}catch(Exception e) {
-				Logger.error("fail to upload file due to {}",e.getCause());
+				Logger.error("fail to upload file due to {}",e.getLocalizedMessage());
 				response.setPhotoPath("fail to upload at this time");
 			}
 		}
@@ -85,12 +82,12 @@ public class FileUploadResource {
 				File file = new File(Constants.UPLOAD_LOCATION+File.separator+originalFileName);
 				inputFile.transferTo(file);
 				if(inputFile.getSize() > 0 && inputFile.getSize() < Constants.MAX_UPLOAD_SIZE) {
-					RecruiterProfileForm user = new RecruiterProfileForm();
-					RecruiterProfileDTO  recruiter =  userService.findRecruiterById(CommonUtill.convertTOBigInteger(userId));
-					recruiter.setPhotoName(originalFileName);
-					recruiter.setPhotoPath(file.getAbsolutePath());
-					BeanUtils.copyProperties(recruiter, user);
-					userService.updateRecruiterProfile(user);
+					RecruiterProfileForm recruiter = new RecruiterProfileForm();
+					 recruiter =  userService.findRecruiterById(CommonUtill.convertTOBigInteger(userId));
+					 recruiter.setPhotoName(originalFileName);
+					 recruiter.setPhotoPath(file.getAbsolutePath());
+					//BeanUtils.copyProperties(recruiter, user);
+					userService.updateRecruiterProfile(recruiter);
 					response.setPhotoName(originalFileName);
 					response.setPhotoPath(file.getAbsolutePath());
 			}else {

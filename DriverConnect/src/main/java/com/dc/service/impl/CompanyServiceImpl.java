@@ -1,5 +1,6 @@
 package com.dc.service.impl;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.slf4j.Logger;
@@ -43,6 +44,11 @@ public class CompanyServiceImpl implements CompanyService{
 	@Override
 	public CompanyProfileForm updateCompanyDetails(CompanyProfileForm company) throws DataAccessLayerException {
 		return companyDao.updateCompanyDetails(company);
+	}
+
+	@Override
+	public CompanyProfileForm fetchCompanyDetails(BigInteger id) throws DataAccessLayerException {
+		return companyDao.fetchCompanyDetails(id); 
 	}
 	
 	

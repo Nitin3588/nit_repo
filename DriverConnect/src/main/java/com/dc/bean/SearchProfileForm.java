@@ -13,7 +13,7 @@ public class SearchProfileForm {
 	private  String employmentType;
 	private Integer salaryAnnual;
 
-	private List<Integer> cityList;
+	private List<String> cityList;
 	private List<String> vechicleList;
 	private String minSalary;
 	private String maxSalary;
@@ -71,10 +71,10 @@ public class SearchProfileForm {
 	public void setSalaryAnnual(Integer salaryAnnual) {
 		this.salaryAnnual = salaryAnnual;
 	}
-	public List<Integer> getCityList() {
+	public List<String> getCityList() {
 		return cityList;
 	}
-	public void setCityList(List<Integer> cityList) {
+	public void setCityList(List<String> cityList) {
 		this.cityList = cityList;
 	}
 	public List<String> getVechicleList() {

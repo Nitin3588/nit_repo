@@ -27,7 +27,6 @@ public class JobDetailForm implements Serializable{
 	private String expReq;
 	private int minWorkexp;
 	private int maxWorkexp;
-	private int cityId;
 	private BigInteger recId;
 	private Date crtdDate;
 
@@ -50,6 +49,9 @@ public class JobDetailForm implements Serializable{
 	
 	@JsonIgnore
 	private List<String> vechicleTypes;
+	
+	//private int cityId;
+	private List<String> cityList;
 	
 	private String companyAddress;
 	private Date   expiryDate;
@@ -132,12 +134,12 @@ public class JobDetailForm implements Serializable{
 	public void setExpReq(String expReq) {
 		this.expReq = expReq;
 	}
-	public int getCityId() {
+	/*public int getCityId() {
 		return cityId;
 	}
 	public void setCityId(int cityId) {
 		this.cityId = cityId;
-	}
+	}*/
 	public BigInteger getRecId() {
 		return recId;
 	}
@@ -241,6 +243,12 @@ public class JobDetailForm implements Serializable{
 	}
 	public void setVechicleList(List<String> vechicleTypes) {
 		this.vechicleTypes = vechicleTypes;
+	}
+	public List<String> getCityList() {
+		return cityList;
+	}
+	public void setCityList(List<String> cityList) {
+		this.cityList = cityList;
 	}
 	public Date getExpiryDate() {
 		return expiryDate;

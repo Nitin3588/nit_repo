@@ -41,7 +41,7 @@ public class OtpDaoImpl implements OtpDao{
 	private  static final Logger Logger = LoggerFactory.getLogger(OtpDaoImpl.class); 
 	
 	@Override
-	public OTPForm saveOTPdetails(OTPForm otp) throws DataAccessLayerException {
+	public OTPForm saveOTPdetails(final OTPForm otp) throws DataAccessLayerException {
 		
 		KeyHolder key = new GeneratedKeyHolder(); 
 	     final String query = SqlConstants.insert_otp_deatils;

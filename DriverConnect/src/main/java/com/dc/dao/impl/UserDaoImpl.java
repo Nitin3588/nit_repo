@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.commons.io.CopyUtils;
 import org.hibernate.Criteria;
 import org.hibernate.Query;
 import org.hibernate.SQLQuery;
@@ -54,7 +55,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public boolean deleteUser(Integer Id) throws DataAccessLayerException {
+	public boolean deleteUser(Integer Id) throws DataAccessLayerException,ApplicationException {
 
 		boolean deleted = false;
 		Session session=sessionFactory.getCurrentSession();
@@ -73,7 +74,7 @@ public class UserDaoImpl implements UserDao{
 	}
 
 	@Override
-	public UserProfileForm updateUser(UserProfileForm user) throws DataAccessLayerException {
+	public UserProfileForm updateUser(UserProfileForm user) throws DataAccessLayerException,ApplicationException {
 
 		Session session=sessionFactory.getCurrentSession();
 		UserProfileDTO userProfileDTO=new UserProfileDTO();
@@ -91,7 +92,7 @@ public class UserDaoImpl implements UserDao{
 
 
 	@Override
-	public UserProfileDTO findUserById(BigInteger userId) throws DataAccessLayerException {
+	public UserProfileDTO findUserById(BigInteger userId) throws DataAccessLayerException,ApplicationException {
 		UserProfileDTO userDetailsDTO = null;
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(UserProfileDTO.class);
@@ -137,7 +138,7 @@ public class UserDaoImpl implements UserDao{
 		try {
 			BeanUtils.copyProperties(userDTO, userDetails);
 		}catch(Exception e) {
-			System.out.println("Hello");
+			Logger.error(e.getMessage(), e.getCause());
 		}
 		userDetails.setUserType("1");
 		return userDetails;
@@ -209,18 +210,19 @@ public class UserDaoImpl implements UserDao{
 
 	
 	@Override
-	public RecruiterProfileDTO findRecruiterById(BigInteger Id) throws DataAccessLayerException {
+	public RecruiterProfileForm findRecruiterById(BigInteger Id) throws DataAccessLayerException ,ApplicationException {
 
+		RecruiterProfileForm rec  =new RecruiterProfileForm();
 		Session session=sessionFactory.getCurrentSession();
 		Criteria cr = session.createCriteria(RecruiterProfileDTO.class);
 		cr.add(Restrictions.eq("id", Id));
 		RecruiterProfileDTO recruiterProfileDTO = (RecruiterProfileDTO)cr.uniqueResult();
-		Logger.info("recruiter details {}",recruiterProfileDTO );
 		if(null  == recruiterProfileDTO) {
-			throw new DataAccessLayerException(ResponseStatus.NOT_FOUND, new Throwable(ResponseStatus.NOT_FOUND) );
+			throw new ApplicationException(ResponseStatus.NOT_FOUND, new Throwable(ResponseStatus.NOT_FOUND) );
 		}
-		Logger.info("Recruiter details returned By Id");
-		return recruiterProfileDTO;
+		BeanUtils.copyProperties(recruiterProfileDTO, rec);
+		Logger.info("recruiter details {}",rec);
+		return rec;
 	}
 
 	

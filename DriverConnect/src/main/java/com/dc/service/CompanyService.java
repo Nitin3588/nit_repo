@@ -1,5 +1,6 @@
 package com.dc.service;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import com.dc.bean.CompanyProfileForm;
@@ -16,6 +17,8 @@ public interface CompanyService {
 	public List<CompanyProfileForm> fetchCompanyDetailsForSubscriber(UserProfileForm user) throws DataAccessLayerException;
 
 	public CompanyProfileForm updateCompanyDetails(CompanyProfileForm company) throws DataAccessLayerException;
+	
+	public CompanyProfileForm fetchCompanyDetails(BigInteger id) throws DataAccessLayerException;
 
 	
 }

@@ -79,7 +79,6 @@ public class LoginResource {
 		
 		if (null != mobile && null!= userType && (Integer.valueOf(userType).equals(Constants.userRole.ROLE_DRIVER) ||
 				Integer.valueOf(userType).equals(Constants.userRole.ROLE_RECRUITER))) {
-			//Logger.info("received : " + userId );
 			try {
 				if(Integer.valueOf(userType) == Constants.userRole.ROLE_DRIVER){
 					 user = userService.findUserByMobile(mobile);
